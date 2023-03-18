@@ -12,10 +12,8 @@ public class ClientApplication extends Application
     public void start(Stage primaryStage) throws IOException {
         ModelClient model = new ModelManagerClient();
 
-
         ViewModelFactory viewModelFactory = new ViewModelFactory(model);
-//        ViewHandler view = new ViewHandler(viewModelFactory);
-//
-//        view.start(primaryStage);
+       ViewHandler view = new ViewHandler(viewModelFactory);
+       view.start(primaryStage);
     }
 }
