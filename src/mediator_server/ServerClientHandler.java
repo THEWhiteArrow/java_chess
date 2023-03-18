@@ -17,7 +17,7 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener{
 
 	private PrintWriter out;
 
-	private com.google.gson.Gson gson;
+//	private com.google.gson.Gson gson;
 
 	private String roomId;
 
