@@ -1,22 +1,27 @@
-package view_client
+package view_client;
 
--client;
 
-import viewmodel-client.ViewModel;
+import javafx.scene.layout.Region;
 
-public interface ViewController {
+public abstract class ViewController {
 
-	private Region region;
+	protected Region root;
 
-	private ViewHandler viewHandler;
+	protected ViewHandler viewHandler;
 
-	private ViewModel viewModel;
+	protected ViewModel viewModel;
 
-	private ViewHandler viewHandler;
 
-	public abstract void init(ViewHandler viewHandler, ViewModel viewModel, Region root);
 
-	public abstract Region getRoot();
+	public void init(ViewHandler viewHandler, ViewModel viewModel, Region root){
+		this.viewHandler=viewHandler;
+		this.viewModel=viewModel;
+		this.root=root;
+	}
+
+	public Region getRoot(){
+		return root;
+	}
 
 	public abstract void reset();
 

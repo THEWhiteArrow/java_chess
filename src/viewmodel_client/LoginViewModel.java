@@ -1,26 +1,25 @@
-package viewmodel_client
+package viewmodel_client;
 
--client;
+import javafx.beans.property.StringProperty;
+import javafx.fxml.FXML;
+import model_client.ModelClient;
 
-import model-client.ModelClient;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class LoginViewModel implements java::beans::PropertyChangeListener, ViewModel {
+public class LoginViewModel implements PropertyChangeListener, ViewModel {
 
-	private StringProperty portPropert;
+	@FXML private StringProperty portPropert;
 
-	private StringProperty hostProperty;
+	@FXML private StringProperty hostProperty;
 
-	private StringProperty errorProperty;
+	@FXML private StringProperty errorProperty;
 
 	private ViewState viewState;
 
 	private ModelClient modelClient;
 
-	private ViewState viewState;
 
-	private ModelClient modelClient;
-
-	private java::beans::PropertyChangeListener java::beans::PropertyChangeListener;
 
 	public LoginViewModel(ModelClient model, ViewState viewState) {
 

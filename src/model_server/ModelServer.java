@@ -1,14 +1,12 @@
-package model_server
+package model_server;
 
--server;
+import mediator_server.ServerConnector;
 
-import mediator-server.ServerConnector;
-import mediator-server.String;
-import mediator-server.Socket;
+import java.net.Socket;
 
 public interface ModelServer {
 
-	private ServerConnector serverConnector;
+//	public ServerConnector serverConnector;
 
 	public abstract String createGameRoom(Socket socket);
 

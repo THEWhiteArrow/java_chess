@@ -1,35 +1,22 @@
-package view_client
+package view_client;
 
--client;
 
-import viewmodel-client.ViewModel;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 
-public class LoginViewController implements ViewController, ViewController {
 
-	private TextField hostField;
+public class LoginViewController extends ViewController {
 
-	private TextField portField;
+	@FXML private TextField hostField;
+
+	@FXML private TextField portField;
 
 	private void login() {
 
 	}
 
 
-	/**
-	 * @see view-client.ViewController#init(view-client.ViewHandler, viewmodel-client.ViewModel, view-client.Region)
-	 *  
-	 */
-	public void init(ViewHandler viewHandler, ViewModel viewModel, Region root) {
 
-	}
-
-
-	/**
-	 * @see view-client.ViewController#getRoot()
-	 */
-	public Region getRoot() {
-		return null;
-	}
 
 
 	/**

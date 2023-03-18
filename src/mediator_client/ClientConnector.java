@@ -1,15 +1,10 @@
-package mediator_client
+package mediator_client;
 
--client;
-
-import mediator-server.String;
--server.Socket;
--server.PrintWriter;
 import mediator_server.GamePackage;
-import mediator_server.PrintWriter;
-import mediator_server.Socket;
-import mediator_server.String;
-import model-client.ModelClient;-server.GamePackage;
+import model_client.ModelClient;
+
+import java.io.PrintWriter;
+import java.net.Socket;
 
 public class ClientConnector extends ClientModel {
 

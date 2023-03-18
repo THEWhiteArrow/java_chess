@@ -1,15 +1,14 @@
-package viewmodel_client
+package viewmodel_client;
 
--client;
+import model_client.ModelClient;
 
-import model-client.ModelClient;
-import mediator-server.String;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class CreateGameRoomViewModel implements java::beans::PropertyChangeListener, ViewModel {
-
-	private ViewState viewState;
+public class CreateGameRoomViewModel implements PropertyChangeListener, ViewModel {
 
 	private ViewState viewState;
+
 
 	private ModelClient modelClient;
 

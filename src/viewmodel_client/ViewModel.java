@@ -1,4 +1,4 @@
-package viewmodel_client-client;
+package viewmodel_client;
 
 public interface ViewModel {
 

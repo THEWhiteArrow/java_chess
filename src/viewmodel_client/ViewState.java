@@ -1,8 +1,4 @@
-package viewmodel_client
-
--client;
-
-import mediator-server.String;
+package viewmodel_client;
 
 public class ViewState {
 

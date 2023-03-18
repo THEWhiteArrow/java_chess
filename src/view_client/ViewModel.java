@@ -1,4 +1,4 @@
-package view_client-client;
+package view_client;
 
 public class ViewModel {
 

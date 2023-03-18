@@ -1,10 +1,8 @@
-package view_client
+package view_client;
 
--client;
+import javafx.fxml.FXML;
 
-import viewmodel-client.ViewModel;
-
-public class CreateGameViewController implements ViewController, ViewController {
+public class CreateGameViewController extends ViewController {
 
 	private void create() {
 
@@ -14,22 +12,6 @@ public class CreateGameViewController implements ViewController, ViewController 
 
 	}
 
-
-	/**
-	 * @see view-client.ViewController#init(view-client.ViewHandler, viewmodel-client.ViewModel, view-client.Region)
-	 *  
-	 */
-	public void init(ViewHandler viewHandler, ViewModel viewModel, Region root) {
-
-	}
-
-
-	/**
-	 * @see view-client.ViewController#getRoot()
-	 */
-	public Region getRoot() {
-		return null;
-	}
 
 
 	/**

@@ -1,20 +1,26 @@
-package viewmodel_client
+package viewmodel_client;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import model_client.ModelClient;
 
--client;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-import model-client.ModelClient;
-import mediator-server.String;
 
-public class ChessViewModel implements java::beans::PropertyChangeListener, ViewModel {
+public class ChessViewModel implements ViewModel, PropertyChangeListener {
+
+	private final String FEN="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+	private StringProperty notation;
 
 	private ViewState viewState;
 
-	private ViewState viewState;
 
-	private ModelClient modelClient;
+	private ModelClient model;
 
 	public ChessViewModel(ModelClient model, ViewState viewState) {
-
+		this.model=model;
+		this.viewState=viewState;
+		this.notation = new SimpleStringProperty(FEN);
 	}
 
 	public void clear() {

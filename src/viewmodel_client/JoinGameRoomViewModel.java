@@ -1,18 +1,20 @@
-package viewmodel_client
+package viewmodel_client;
 
--client;
+import javafx.beans.property.StringProperty;
+import javafx.fxml.FXML;
+import model_client.ModelClient;
 
-import model-client.ModelClient;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class JoinGameRoomViewModel implements java::beans::PropertyChangeListener, ViewModel {
+public class JoinGameRoomViewModel implements PropertyChangeListener, ViewModel {
 
-	private StringProperty idProperty;
+	@FXML private StringProperty idProperty;
 
-	private StringProperty errorProperty;
+	@FXML private StringProperty errorProperty;
 
 	private ViewState viewState;
 
-	private ViewState viewState;
 
 	private ModelClient modelClient;
 

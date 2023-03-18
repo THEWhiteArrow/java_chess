@@ -1,49 +1,43 @@
-package viewmodel_client
+package viewmodel_client;
 
--client;
 
-import model-client.ModelClient;
+import model_client.ModelClient;
 
 public class ViewModelFactory {
 
-	private CreateGameRoomViewModel createGameRoomViewModel;
+	private ViewModel createGameRoomViewModel;
 
-	private JoinGameRoomViewModel joinGameRoomViewModel;
+	private ViewModel joinGameRoomViewModel;
 
-	private LoginViewModel loginViewModel;
-
-	private ViewState viewState;
-
-	private ChessViewModel chessViewModel;
-
-	private ChessViewModel chessViewModel;
-
-	private CreateGameRoomViewModel createGameRoomViewModel;
-
-	private JoinGameRoomViewModel joinGameRoomViewModel;
-
-	private LoginViewModel loginViewModel;
+	private ViewModel loginViewModel;
+	private ViewModel chessViewModel;
 
 	private ViewState viewState;
+
+
+
+
+
 
 	public ViewModelFactory(ModelClient model) {
-
+		this.viewState = new ViewState();
+		this.chessViewModel = new ChessViewModel(model, viewState);
 	}
 
 	public ViewModel getLoginViewModel() {
-		return null;
+		return loginViewModel;
 	}
 
 	public ViewModel getJoinGameRoomViewModel() {
-		return null;
+		return joinGameRoomViewModel;
 	}
 
 	public ViewModel getCreateGameRoomViewModel() {
-		return null;
+		return createGameRoomViewModel;
 	}
 
 	public ViewModel getChessViewModel() {
-		return null;
+		return chessViewModel;
 	}
 
 }
