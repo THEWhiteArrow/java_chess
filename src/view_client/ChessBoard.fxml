@@ -59,7 +59,7 @@
                </children></AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #800000;" GridPane.columnIndex="3">
                <children>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="queen" fitHeight="40.0" fitWidth="40.0" layoutX="5.0" layoutY="5.0"  pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/black/Q.png" />
                      </image>
