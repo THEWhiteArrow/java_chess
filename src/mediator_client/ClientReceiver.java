@@ -10,7 +10,7 @@ public class ClientReceiver implements Runnable {
 
 	private ClientConnector client;
 
-	private com.google.gson.Gson gson;
+//	private com.google.gson.Gson gson;
 
 	private ClientConnector clientConnector;
 

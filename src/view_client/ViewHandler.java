@@ -10,7 +10,7 @@ public class ViewHandler {
 
 	private Region root;
 	private Stage primaryStage;
-	private ViewController chessViewController;
+	private ChessViewController chessViewController;
 
 	private Scene currentScene;
 
@@ -34,7 +34,7 @@ public class ViewHandler {
 		switch (id)
 		{
 			case "chess":
-				chessViewController = loadViewController("ChessBoard.fxml",chessViewController, (ViewModel) viewModelFactory.getChessViewModel());
+				chessViewController = loadViewController("ChessBoard.fxml",chessViewController);
 				break;
 		}
 		currentScene.setRoot(root);
@@ -50,17 +50,17 @@ public class ViewHandler {
 		primaryStage.show();
 	}
 
-	private ViewController loadViewController(String fxmlFile, ViewController viewController, ViewModel viewModel) {
+	private ChessViewController loadViewController(String fxmlFile, ChessViewController viewController) {
 		if (viewController == null)
 		{
 			try
 			{
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(getClass().getResource(fxmlFile));
-				Region root = loader.load();
+				this.root = loader.load();
 				viewController = loader.getController();
 				viewController
-						.init(this, viewModel, this.root);
+						.init(this, viewModelFactory.getChessViewModel(), this.root);
 				viewController.reset();
 			}
 			catch (Exception e)

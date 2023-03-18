@@ -2,6 +2,7 @@ package viewmodel_client;
 
 
 import model_client.ModelClient;
+import view_client.ChessViewController;
 
 public class ViewModelFactory {
 
@@ -10,7 +11,7 @@ public class ViewModelFactory {
 	private ViewModel joinGameRoomViewModel;
 
 	private ViewModel loginViewModel;
-	private ViewModel chessViewModel;
+	private ChessViewModel chessViewModel;
 
 	private ViewState viewState;
 
@@ -36,7 +37,7 @@ public class ViewModelFactory {
 		return createGameRoomViewModel;
 	}
 
-	public ViewModel getChessViewModel() {
+	public ChessViewModel getChessViewModel() {
 		return chessViewModel;
 	}
 
