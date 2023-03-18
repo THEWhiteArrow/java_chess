@@ -1,8 +1,10 @@
-package mediator_server
+package mediator_server;
 
--server;
 
-import model-server.ModelServer;
+
+import model_server.ModelServer;
+
+import java.net.ServerSocket;
 
 public class ServerConnector {
 

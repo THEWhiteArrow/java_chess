@@ -1,23 +1,25 @@
-package mediator_server
+package mediator_server;
 
--server;
+import model_server.ModelManagerServer;
+import model_server.ModelServer;
 
-import model-server.ModelManagerServer;
-import model-server.ModelServer;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 
-public class ServerClientHandler implements java::lang::Runnable, java::beans::PropertyChangeListener, java::lang::Runnable {
+public class ServerClientHandler implements Runnable, PropertyChangeListener{
 
 	private Socket socket;
 
-	private BuferedReader in;
+	private BufferedReader in;
 
 	private PrintWriter out;
 
-	private Gson gson;
+	private com.google.gson.Gson gson;
 
 	private String roomId;
-
-	private ModelManagerServer modelManagerServer;
 
 	private ModelServer modelServer;
 
@@ -39,22 +41,12 @@ public class ServerClientHandler implements java::lang::Runnable, java::beans::P
 
 	}
 
-
-	/**
-	 * @see java::beans::PropertyChangeListener#propertyChange(PropertyChangeEvent)
-	 *  
-	 */
-	public void propertyChange(PropertyChangeEvent evt) {
-
-	}
-
-
-	/**
-	 * @see java::lang::Runnable#run()
-	 *  
-	 */
 	public void run() {
 
 	}
 
+	@Override public void propertyChange(PropertyChangeEvent evt)
+	{
+
+	}
 }
