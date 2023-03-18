@@ -1,10 +1,6 @@
-package model_client
+package model_client;
 
--client;
-
-import mediator-server.String;
-
-public interface ModelClient extends utility::observer::subject::UnnamedPropertyChangeSubject {
+public interface ModelClient extends utility.observer.javaobserver.UnnamedPropertyChangeSubject {
 
 	public abstract String createGameRoom();
 

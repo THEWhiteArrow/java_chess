@@ -1,11 +1,10 @@
-package model_client
+package model_client;
 
--client;
+import mediator_client.ClientModel;
 
--client.ClientModel;
-import mediator-server.String;
+import java.beans.PropertyChangeListener;
 
-public class ModelManagerClient implements ModelClient, ModelClient {
+public class ModelManagerClient implements ModelClient {
 
 	private ClientModel clientModel;
 
@@ -64,4 +63,13 @@ public class ModelManagerClient implements ModelClient, ModelClient {
 
 	}
 
+	@Override
+	public void addListener(PropertyChangeListener listener) {
+
+	}
+
+	@Override
+	public void removeListener(PropertyChangeListener listener) {
+
+	}
 }

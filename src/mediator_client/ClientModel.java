@@ -1,4 +1,4 @@
-package mediator_client-client;
+package mediator_client;
 
 public class ClientModel {
 

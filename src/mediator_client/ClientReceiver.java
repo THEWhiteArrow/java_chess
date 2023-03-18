@@ -1,20 +1,16 @@
-package mediator_client
+package mediator_client;
 
--client;
+import java.io.BufferedReader;
+import java.net.Socket;
 
-import mediator-server.GamePackage;
-import mediator-server.BuferedReader;
-import mediator-server.Gson;
-import mediator-server.Socket;
-import model-server.ModelServer;
+import model_server.ModelServer;
+public class ClientReceiver implements Runnable {
 
-public class ClientReceiver implements java::lang::Runnable {
-
-	private BuferedReader in;
+	private BufferedReader in;
 
 	private ClientConnector client;
 
-	private Gson gson;
+	private com.google.gson.Gson gson;
 
 	private ClientConnector clientConnector;
 
