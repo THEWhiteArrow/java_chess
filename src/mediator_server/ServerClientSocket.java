@@ -1,10 +1,14 @@
-package mediator_server-server;
+package mediator_server;
+
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 public class ServerClientSocket {
 
 	private Socket socket;
 
-	private BuferedReader in;
+	private BufferedReader in;
 
 	private PrintWriter out;
 

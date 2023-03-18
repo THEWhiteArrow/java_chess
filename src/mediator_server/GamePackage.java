@@ -1,6 +1,9 @@
-package mediator_server-server;
+package mediator_server;
 
-public class GamePackage implements java::lang::Serializable {
+import java.io.Serializable;
+
+public class GamePackage implements Serializable
+{
 
 	public static String ERROR = "ERROR";
 

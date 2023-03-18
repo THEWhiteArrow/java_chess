@@ -1,4 +1,4 @@
-package mediator_server-server;
+package mediator_server;
 
 public class Server {
 
