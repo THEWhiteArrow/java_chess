@@ -10,7 +10,7 @@ import java.beans.PropertyChangeListener;
 public class ChessViewModel implements PropertyChangeListener {
 
 	private final String FEN="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-	private StringProperty notation;
+	private StringProperty notationProperty;
 
 	private ViewState viewState;
 
@@ -20,16 +20,18 @@ public class ChessViewModel implements PropertyChangeListener {
 	public ChessViewModel(ModelClient model, ViewState viewState) {
 		this.model=model;
 		this.viewState=viewState;
-		this.notation = new SimpleStringProperty(FEN);
+		this.notationProperty = new SimpleStringProperty();
 	}
 
 	public void clear() {
-
+		this.notationProperty.set(FEN);
 	}
 
 	public void sendNotation(String notation) {
 
 	}
+
+	public StringProperty getNotationProperty(){return notationProperty;}
 
 
 	/**

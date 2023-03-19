@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" userData="Chess" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view_client.ChessViewController">
+<Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" userData="Chess" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view_client.ChessViewController">
    <children>
       <GridPane fx:id="grid" gridLinesVisible="true" layoutX="147.0" layoutY="97.0" style="-fx-background-color: #FAF0E6;">
         <columnConstraints>
@@ -98,85 +98,173 @@
             <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #800000;" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="586.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/black/P.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="606.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/black/R.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="552.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/black/N.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="595.0" layoutY="206.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/black/P.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="451.0" layoutY="30.0" pickOnBounds="true">
-         <image>
-            <Image url="@../images/black/B.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="649.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/black/P.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="355.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/black/K.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="92.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/black/P.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="183.0" layoutY="31.0" pickOnBounds="true">
-         <image>
-            <Image url="@../images/black/B.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="112.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/black/N.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="40.0" layoutX="50.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/black/R.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="36.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/black/P.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="40.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/black/P.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="92.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/black/P.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="646.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/black/P.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="q1" fitHeight="40.0" fitWidth="40.0" layoutX="234.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/black/Q.png" />
-         </image>
-      </ImageView>
+      <Pane fx:id="piecesPane" prefHeight="600.0" prefWidth="700.0">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black/P.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black/R.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black/N.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black/P.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/black/B.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black/P.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black/K.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black/P.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/black/B.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black/N.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black/R.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black/P.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black/P.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black/P.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black/P.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black/Q.png" />
+               </image>
+            </ImageView>
+
+
+
+
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="650.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white/P.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="650.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white/R.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="650.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white/N.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="650.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white/P.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="650.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/white/B.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="650.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white/P.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="650.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white/K.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="650.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white/P.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="650.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/white/B.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="650.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white/N.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="40.0" layoutX="650.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white/R.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="650.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white/P.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="650.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white/P.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="650.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white/P.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="650.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white/P.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="650.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white/Q.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
    </children>
 </Pane>
