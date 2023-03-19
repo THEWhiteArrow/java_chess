@@ -3,6 +3,7 @@ package mediator_client;
 import java.io.BufferedReader;
 import java.net.Socket;
 
+import com.google.gson.Gson;
 import model_server.ModelServer;
 public class ClientReceiver implements Runnable {
 
@@ -10,19 +11,14 @@ public class ClientReceiver implements Runnable {
 
 	private ClientConnector client;
 
-//	private com.google.gson.Gson gson;
+	private Gson gson;
 
 	private ClientConnector clientConnector;
 
-	public ClientReceiver(Socket socket, ModelServer model) {
+	public ClientReceiver(ClientConnector clientConnector, BufferedReader in) {
+
 
 	}
-
-
-	/**
-	 * @see java::lang::Runnable#run()
-	 *  
-	 */
 	public void run() {
 
 	}
