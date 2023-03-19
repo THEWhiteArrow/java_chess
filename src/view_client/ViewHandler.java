@@ -3,6 +3,7 @@ package view_client;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import viewmodel_client.ViewModelFactory;
 
@@ -38,12 +39,14 @@ public class ViewHandler {
 				break;
 		}
 		currentScene.setRoot(root);
+
 		String title = "";
 		if (root.getUserData() != null)
 		{
 			title += root.getUserData();
 		}
 		primaryStage.setTitle(title);
+		primaryStage.setResizable(false);
 		primaryStage.setScene(currentScene);
 		primaryStage.setWidth(root.getPrefWidth());
 		primaryStage.setHeight(root.getPrefHeight());

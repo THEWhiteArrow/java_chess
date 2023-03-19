@@ -4,9 +4,51 @@ import java.util.ArrayList;
 
 public class FENParser {
 
+
+    public static ArrayList<Piece> createPieces(String notation){
+        ArrayList<Piece> pieces = new ArrayList<>();
+        char[][] board = parseFEN(notation);
+        for(int j=0;j<8;++j){
+            for(int i=0;i<8;++i){
+                switch (board[i][j]){
+                    case '.':
+                        break;
+                    default:
+                        pieces.add(
+                                new Piece(
+                                        calculateSrc(board[i][j]),
+                                        calculateLayoutX(i),
+                                        calculateLayoutY(j)
+                                        )
+                        );
+                }
+
+            }
+        }
+        return pieces;
+    }
+
+    public static String calculateSrc(char c){
+        if( (int)(c)>=97 ) return "@../images/black/"+(char)((int)(c)-32)+".png";
+        else return "@../images/white/"+c+".png";
+
+    }
+
+    public static double calculateLayoutX(int n){
+        return (double)(n*50.0+155);
+    }
+
+    public static double calculateLayoutY(int n){
+        return (double)(n*50.0+105);
+    }
+
+
+
     // Given a FEN notation string, return a 2D array representing the board
+
     public static char[][] parseFEN(String fen) {
         // Implementation omitted for brevity
+
         String[] parts = fen.split(" ");
         String[] rows = parts[0].split("/");
         char[][] board = new char[8][8];
@@ -28,6 +70,16 @@ public class FENParser {
             col = 0;
         }
         return board;
+//        return new char[][]{
+//                {'.','.','.','.','.','.','.','.',},
+//                {'.','.','.','.','.','.','.','.',},
+//                {'.','.','.','.','.','.','.','.',},
+//                {'.','.','.','.','.','.','.','.',},
+//                {'.','.','.','.','.','.','.','.',},
+//                {'.','.','.','.','.','.','.','.',},
+//                {'.','.','.','.','.','.','.','.',},
+//                {'.','.','.','.','.','.','.','.',},
+//        };
     }
 
     // Given a field in algebraic notation (e.g. "e4"), return its row and column indices on the board

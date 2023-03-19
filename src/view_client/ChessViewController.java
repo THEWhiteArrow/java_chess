@@ -1,27 +1,31 @@
 package view_client;
 
-import javafx.event.Event;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import util.DraggableMaker;
+import util.FENParser;
+import util.Piece;
 import viewmodel_client.ChessViewModel;
-import javafx.scene.input.*;
-import javafx.event.EventHandler;
 
-import java.lang.ref.WeakReference;
+import java.io.File;
+import java.util.ArrayList;
+
 
 public class ChessViewController  {
+	@FXML private Pane mainPane;
+	@FXML private Pane piecesPane;
 
 	protected Region root;
-	private double orgSceneX, orgSceneY;
-	private double orgTranslateX, orgTranslateY;
 
-	private ViewHandler viewHandler;
+	protected ViewHandler viewHandler;
 
 	protected ChessViewModel viewModel;
-
-	@FXML private ImageView queen;
 
 
 
@@ -29,22 +33,18 @@ public class ChessViewController  {
 		this.viewHandler=viewHandler;
 		this.viewModel=viewModel;
 		this.root=root;
-		this.orgSceneX = 0;
-		this.orgSceneY= 0;
-		this.orgTranslateX =0;
-		this.orgTranslateY=0;
-
-		makeDraggable(queen);
 
 
 
+		viewModel.getNotationProperty().addListener((obs,oldValue,newValue)->{
+			String notation = (String)newValue;
+			System.out.println(notation);
 
+			updatePieces(notation);
 
-
-
+		});
+		reset();
 	}
-
-
 
 	public Region getRoot(){
 		return root;
@@ -52,92 +52,44 @@ public class ChessViewController  {
 
 
 	public void reset() {
-
-	}
-
-	private void makeDraggable(ImageView imageView)
-	{
-
-
-
-		imageView.setOnMousePressed(new EventHandler<MouseEvent>()
-		{
-			AnchorPane targetPane = null;
-
-			@Override public void handle(MouseEvent event)
-			{
-				// Store the initial coordinates of the mouse click
-				orgSceneX = event.getSceneX();
-				orgSceneY = event.getSceneY();
-				orgTranslateX = imageView.getTranslateX();
-				orgTranslateY = imageView.getTranslateY();
-
-				targetPane.setPrefSize(200, 200);
-				targetPane.setLayoutX(event.getSceneX());
-				targetPane.setLayoutY(event.getSceneY());
-
-			}
-		});
-
-		imageView.setOnMouseDragged(new EventHandler<MouseEvent>()
-		{
-			@Override public void handle(MouseEvent event)
-			{
-				// Calculate the new position of the ImageView
-				double offsetX = event.getSceneX() - orgSceneX;
-				double offsetY = event.getSceneY() - orgSceneY;
-				double newTranslateX = orgTranslateX + offsetX;
-				double newTranslateY = orgTranslateY + offsetY;
-
-				// Set the new position of the ImageView
-				imageView.setTranslateX(newTranslateX);
-				imageView.setTranslateY(newTranslateY);
-			}
-		});
-
-
-		AnchorPane anchorPane = new AnchorPane();
-
-
-		// Set the event handler for mouse release events on the ImageView
-		imageView.setOnMouseReleased(new EventHandler<MouseEvent>()
-		{
-			@Override public void handle(MouseEvent event)
-			{
-				AnchorPane targetPane = new AnchorPane();
-				targetPane.setPrefSize(200, 200);
-				targetPane.setLayoutX(event.getSceneX());
-				targetPane.setLayoutY(event.getSceneY());
-				anchorPane.getChildren().add(targetPane);
-
-
-				// Check if the ImageView is within the bounds of the target AnchorPane
-				if (event.getSceneX() > targetPane.getLayoutX() && event.getSceneX()
-						< targetPane.getLayoutX() + targetPane.getPrefWidth()
-						&& event.getSceneY() > targetPane.getLayoutY() && event.getSceneY()
-						< targetPane.getLayoutY() + targetPane.getPrefHeight())
-				{
-					// Remove the ImageView from the root AnchorPane
-					targetPane.getChildren().remove(imageView);
-
-					// Add the ImageView to the target AnchorPane
-					anchorPane.getChildren().add(imageView);
-
-					// Set the position of the ImageView relative to the target AnchorPane
-					imageView.setLayoutX(event.getSceneX() - targetPane.getLayoutX());
-					imageView.setLayoutY(event.getSceneY() - targetPane.getLayoutY());
-				}
-				else
-				{
-					// If the ImageView is not within the bounds of the target AnchorPane, return it to its original position
-					imageView.setTranslateX(orgTranslateX);
-					imageView.setTranslateY(orgTranslateY);
-				}
-			}
-
-		});
+		viewModel.clear();
 	}
 
 
+	public void updatePieces(String notation){
+		System.out.println("UPDATING PIECES...........");
 
+		for(Node node : piecesPane.getChildren()){
+//			node.setOpacity(0);
+//			node.setDisable(true);
+			System.out.println( ((ImageView)(node)).getImage().getUrl() );
+		}
+
+
+//		IMPORTANT
+//		need to reference the out folder from here
+		File file = new File("@../images/black/R.png");
+		Image image = new Image(file.toURI().toString());
+		System.out.println(image.getUrl());
+
+
+		ArrayList<Piece> pieces = FENParser.createPieces(notation);
+		for(Piece p : pieces){
+
+
+//			File file = new File("images/black/R.png");
+//			Image image = new Image(file.toURI().toString());
+//			ImageView imageView = new ImageView(image);
+//
+//			imageView.setFitWidth(40);
+//			imageView.setFitHeight(40);
+
+
+//			imageView.setX(p.getX());
+//			imageView.setY(p.getY());
+
+//			mainPane.getChildren().add((Node)imageView);
+
+		}
+	}
 }
