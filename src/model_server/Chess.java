@@ -2,7 +2,6 @@ package model_server;
 
 
 import mediator_server.ServerClientHandler;
-import mediator_server.ServerClientSocket;
 
 public class Chess {
 
