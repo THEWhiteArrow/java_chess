@@ -18,7 +18,7 @@ public class MenuViewModel extends ViewModel{
     }
 
     public boolean joinRoom(){
-        model.joinGameRoom(roomIdProperty.get());
+       return model.joinGameRoom(roomIdProperty.get());
     }
 
     public boolean createRoom(){
