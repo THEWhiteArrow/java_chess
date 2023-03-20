@@ -81,7 +81,7 @@ public class ClientConnector  implements ModelClient
 
 	@Override public boolean createGameRoom(String id)
 	{
-		GamePackage pkg = new GamePackage(GamePackage.CREATE).setRoomID(id);
+		GamePackage pkg = new GamePackage(GamePackage.CREATE,id,null,null);
 		out.println( gson.toJson(pkg) );
 
 		try {
@@ -121,6 +121,11 @@ public class ClientConnector  implements ModelClient
 	@Override public void displayMessage(String msg)
 	{
 
+	}
+
+	@Override
+	public boolean connectToServer(String host, int port) {
+		return false;
 	}
 
 	@Override public void addListener(PropertyChangeListener listener)
