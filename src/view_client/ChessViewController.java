@@ -36,6 +36,7 @@ public class ChessViewController extends ViewController {
 
 
 		this.viewModel.getNotationProperty().addListener((obs,oldValue,newValue)->{
+			// here with event notation sth wrong
 			String notation = (String)newValue;
 			Logger.log(notation);
 
