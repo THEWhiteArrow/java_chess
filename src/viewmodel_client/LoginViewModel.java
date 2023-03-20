@@ -7,7 +7,7 @@ import model_client.ModelClient;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class LoginViewModel implements PropertyChangeListener, ViewModel {
+public class LoginViewModel extends ViewModel implements PropertyChangeListener {
 
 	@FXML private StringProperty portPropert;
 

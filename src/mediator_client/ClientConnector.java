@@ -1,5 +1,6 @@
 package mediator_client;
 
+
 import com.google.gson.Gson;
 import mediator_server.GamePackage;
 import model_client.ModelClient;
@@ -76,7 +77,7 @@ public class ClientConnector extends ClientModel implements ModelClient
 
 	@Override public String createGameRoom()
 	{
-
+		return "NO-ID-YET";
 	}
 
 	@Override public void joinGameRoom(String id)

@@ -5,16 +5,20 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import view_client.ChessViewController;
 
 public class DraggableMaker {
     private double startX=0.0,startY=0.0;
     private boolean inRange(double l, double m, double r){
         return l<=m && m<=r;
     }
-    public void makeDraggable(Node node, GridPane grid){
+    public void makeDraggable(Node node, Pane picesPane, ChessViewController controller){
+        startX = node.getLayoutX();
+        startY = node.getLayoutY();
 
         node.setOnDragDetected(evt -> {
-            System.out.println("DETECTED DRAG & DROP");
+//            System.out.println("DETECTED DRAG & DROP");
         });
 
         node.setOnMouseDragged(evt->{
@@ -28,7 +32,9 @@ public class DraggableMaker {
 
         node.setOnMouseReleased(evt->{
 
-            System.out.println("RELEASED"+" | "+ evt.getX()+":"+evt.getY());
+//            System.out.println("RELEASED"+" | "+ evt.getX()+":"+evt.getY());
+
+
 
             double x = node.getLayoutX()+25;
             double y = node.getLayoutY()+25;
@@ -39,13 +45,22 @@ public class DraggableMaker {
 
             }else{
 
-                int snapX =((int) Math.floor((x-150)/50))*50+154;
-                int snapY =((int) Math.floor((y-100)/50))*50+104;
+                int snapX =((int) Math.floor((x-150)/50))*50+155;
+                int snapY =((int) Math.floor((y-100)/50))*50+105;
+
+                for( Node p : picesPane.getChildren()){
+                    if( p.getLayoutX()==snapX && p.getLayoutY()==snapY) {
+                        picesPane.getChildren().remove(p);
+//                        System.out.println("Captured : " +FENParser.calculateFieldName(snapX,snapY));
+                        break;
+                    }
+                }
+
                 node.setLayoutX(snapX);
                 node.setLayoutY(snapY);
                 startX = snapX;
                 startY = snapY;
-
+                controller.sendNotation(FENParser.calculateFieldName(snapX,snapY));
 
             }
 

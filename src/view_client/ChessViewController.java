@@ -12,31 +12,28 @@ import util.DraggableMaker;
 import util.FENParser;
 import util.Piece;
 import viewmodel_client.ChessViewModel;
+import viewmodel_client.ViewModel;
 
 import java.io.File;
 import java.util.ArrayList;
 
 
-public class ChessViewController  {
-	@FXML private Pane mainPane;
+public class ChessViewController extends ViewController {
 	@FXML private Pane piecesPane;
 
-	protected Region root;
-
-	protected ViewHandler viewHandler;
-
-	protected ChessViewModel viewModel;
+	private ChessViewModel viewModel;
 
 
 
-	public void init(ViewHandler viewHandler, ChessViewModel viewModel, Region root){
+
+	public void init(ViewHandler viewHandler, ViewModel viewModel, Region root){
 		this.viewHandler=viewHandler;
-		this.viewModel=viewModel;
+		this.viewModel= (ChessViewModel) viewModel;
 		this.root=root;
 
 
 
-		viewModel.getNotationProperty().addListener((obs,oldValue,newValue)->{
+		this.viewModel.getNotationProperty().addListener((obs,oldValue,newValue)->{
 			String notation = (String)newValue;
 			System.out.println(notation);
 
@@ -55,40 +52,37 @@ public class ChessViewController  {
 		viewModel.clear();
 	}
 
+	public void sendNotation(String fieldName){
+		String notation = FENParser.calculateFen( piecesPane.getChildren() ) +" " +fieldName;
+		System.out.println(notation);
+		viewModel.sendNotation(notation);
+	}
 
 	public void updatePieces(String notation){
 		System.out.println("UPDATING PIECES...........");
 
-		for(Node node : piecesPane.getChildren()){
-//			node.setOpacity(0);
-//			node.setDisable(true);
-			System.out.println( ((ImageView)(node)).getImage().getUrl() );
-		}
+		piecesPane.getChildren().remove(0,32);
 
 
-//		IMPORTANT
-//		need to reference the out folder from here
-		File file = new File("@../images/black/R.png");
-		Image image = new Image(file.toURI().toString());
-		System.out.println(image.getUrl());
 
 
 		ArrayList<Piece> pieces = FENParser.createPieces(notation);
 		for(Piece p : pieces){
 
 
-//			File file = new File("images/black/R.png");
-//			Image image = new Image(file.toURI().toString());
-//			ImageView imageView = new ImageView(image);
-//
-//			imageView.setFitWidth(40);
-//			imageView.setFitHeight(40);
+			File file = new File(p.getSrc());
+			Image image = new Image(file.toURI().toString());
+			ImageView imageView = new ImageView(image);
 
+			imageView.setFitWidth(40);
+			imageView.setFitHeight(40);
 
-//			imageView.setX(p.getX());
-//			imageView.setY(p.getY());
+			imageView.setLayoutX(p.getX());
+			imageView.setLayoutY(p.getY());
 
-//			mainPane.getChildren().add((Node)imageView);
+			piecesPane.getChildren().add(imageView);
+
+			new DraggableMaker().makeDraggable(imageView,piecesPane,this);
 
 		}
 	}

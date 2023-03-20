@@ -1,5 +1,10 @@
 package util;
 
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.image.ImageView;
+
 import java.util.ArrayList;
 
 public class FENParser {
@@ -17,8 +22,8 @@ public class FENParser {
                         pieces.add(
                                 new Piece(
                                         calculateSrc(board[i][j]),
-                                        calculateLayoutX(i),
-                                        calculateLayoutY(j)
+                                        calculateLayoutX(j),
+                                        calculateLayoutY(i)
                                         )
                         );
                 }
@@ -28,18 +33,104 @@ public class FENParser {
         return pieces;
     }
 
+    public static int  calculateRow(double y){
+        return (int)((y-105)/50);
+    }
+
+    public static int calculateColumn(double x){
+        return (int)((x-155)/50);
+    }
+
+    public static String calculateFen(ObservableList<Node> pieces){
+        char[][] board = {
+                {'.','.','.','.','.','.','.','.',},
+                {'.','.','.','.','.','.','.','.',},
+                {'.','.','.','.','.','.','.','.',},
+                {'.','.','.','.','.','.','.','.',},
+                {'.','.','.','.','.','.','.','.',},
+                {'.','.','.','.','.','.','.','.',},
+                {'.','.','.','.','.','.','.','.',},
+                {'.','.','.','.','.','.','.','.',},
+        };
+
+        for(Node node : pieces){
+            double x = node.getLayoutX();
+            double y = node.getLayoutY();
+            int row = calculateRow(y);
+            int column = calculateColumn(x);
+
+//            System.out.println(row+":"+column);
+
+            String url = ((ImageView)node).getImage().getUrl();
+            String pieceName = ""+url.charAt( url.length()-5);
+
+            if( ((ImageView)node).getImage().getUrl().contains("white"))
+                board[column][row] = pieceName.toUpperCase().charAt(0);
+            else
+                board[column][row] = pieceName.toLowerCase().charAt(0);
+        }
+
+        String fenPom = "";
+        for(int j=0;j<8;++j){
+            for(int i=0;i<8;++i){
+                fenPom+=board[i][j];
+            }
+
+            if(j<7)
+                fenPom+="/";
+
+        }
+
+        String fen="";
+
+        int i=0,cnt=0;
+        while(i<fenPom.length()){
+            if( '.'!= fenPom.charAt(i) ){
+                if(cnt!=0){
+                    fen+=""+cnt;
+                    cnt=0;
+                }
+
+                fen+=fenPom.charAt(i);
+            }
+            else{
+                ++cnt;
+            }
+            ++i;
+        }
+        if(cnt!=0)
+            fen+=""+cnt;
+
+
+
+        return fen;
+
+    }
+
+    public static String calculateFieldName(int x, int y){
+        String ans = "";
+        ans += ""+(char)((int)('a')+((x-155)/50));
+        ans += ""+(8-(((y-105)/50)));
+
+        return ans;
+    }
+
+    public static String calculateFieldName(double x, double y){
+        return calculateFieldName((int)x, (int)y);
+    }
+
     public static String calculateSrc(char c){
-        if( (int)(c)>=97 ) return "@../images/black/"+(char)((int)(c)-32)+".png";
-        else return "@../images/white/"+c+".png";
+        if( (int)(c)>=97 ) return "out/production/game/images/black/"+(char)((int)(c)-32)+".png";
+        else return "out/production/game/images/white/"+c+".png";
 
     }
 
-    public static double calculateLayoutX(int n){
-        return (double)(n*50.0+155);
+    public static int calculateLayoutX(int n){
+        return (n*50+155);
     }
 
-    public static double calculateLayoutY(int n){
-        return (double)(n*50.0+105);
+    public static int calculateLayoutY(int n){
+        return (n*50+105);
     }
 
 

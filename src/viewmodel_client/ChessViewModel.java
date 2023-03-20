@@ -7,7 +7,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 
-public class ChessViewModel implements PropertyChangeListener {
+public class ChessViewModel extends ViewModel implements PropertyChangeListener  {
 
 	private final String FEN="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 	private StringProperty notationProperty;
