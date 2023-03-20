@@ -1,5 +1,5 @@
 package viewmodel_client;
 
-public interface ViewModel {
-
+public abstract class ViewModel {
+    public abstract void clear();
 }

@@ -5,13 +5,16 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import viewmodel_client.ViewModel;
 import viewmodel_client.ViewModelFactory;
 
 public class ViewHandler {
 
 	private Region root;
 	private Stage primaryStage;
-	private ChessViewController chessViewController;
+	private ViewController chessViewController;
+	private ViewController loginViewController;
+	private ViewController menuViewController;
 
 	private Scene currentScene;
 
@@ -34,8 +37,14 @@ public class ViewHandler {
 	public void openView(String id) {
 		switch (id)
 		{
+			case "login":
+				loginViewController = loadViewController("LoginView.fxml",loginViewController, viewModelFactory.getLoginViewModel());
+				break;
+			case "menu":
+				menuViewController = loadViewController("MenuView.fxml",menuViewController, viewModelFactory.getMenuViewModel());
+				break;
 			case "chess":
-				chessViewController = loadViewController("ChessBoard.fxml",chessViewController);
+				chessViewController = loadViewController("ChessBoard.fxml",chessViewController, viewModelFactory.getChessViewModel());
 				break;
 		}
 		currentScene.setRoot(root);
@@ -53,7 +62,7 @@ public class ViewHandler {
 		primaryStage.show();
 	}
 
-	private ChessViewController loadViewController(String fxmlFile, ChessViewController viewController) {
+	private ViewController loadViewController(String fxmlFile, ViewController viewController, ViewModel viewModel) {
 		if (viewController == null)
 		{
 			try
@@ -63,7 +72,7 @@ public class ViewHandler {
 				this.root = loader.load();
 				viewController = loader.getController();
 				viewController
-						.init(this, viewModelFactory.getChessViewModel(), this.root);
+						.init(this,viewModel, this.root);
 				viewController.reset();
 			}
 			catch (Exception e)

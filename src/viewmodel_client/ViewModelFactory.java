@@ -6,35 +6,26 @@ import view_client.ChessViewController;
 
 public class ViewModelFactory {
 
-	private ViewModel createGameRoomViewModel;
-
-	private ViewModel joinGameRoomViewModel;
-
-	private ViewModel loginViewModel;
+	private MenuViewModel menuViewModel;
+	private LoginViewModel loginViewModel;
 	private ChessViewModel chessViewModel;
-
 	private ViewState viewState;
-
-
-
 
 
 
 	public ViewModelFactory(ModelClient model) {
 		this.viewState = new ViewState();
 		this.chessViewModel = new ChessViewModel(model, viewState);
+		this.loginViewModel = new LoginViewModel(model, viewState);
+		this.menuViewModel = new MenuViewModel(model,viewState);
 	}
 
-	public ViewModel getLoginViewModel() {
+	public LoginViewModel getLoginViewModel() {
 		return loginViewModel;
 	}
 
-	public ViewModel getJoinGameRoomViewModel() {
-		return joinGameRoomViewModel;
-	}
-
-	public ViewModel getCreateGameRoomViewModel() {
-		return createGameRoomViewModel;
+	public MenuViewModel getMenuViewModel() {
+		return menuViewModel;
 	}
 
 	public ChessViewModel getChessViewModel() {

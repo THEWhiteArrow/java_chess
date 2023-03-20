@@ -14,4 +14,6 @@ public interface ModelClient extends utility.observer.javaobserver.UnnamedProper
 
 	public abstract void displayMessage(String msg);
 
+	boolean connectToServer(String host, int port);
+
 }
