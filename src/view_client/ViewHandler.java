@@ -13,6 +13,8 @@ public class ViewHandler {
 	private Region root;
 	private Stage primaryStage;
 	private ViewController chessViewController;
+	private ViewController loginViewController;
+	private ViewController menuViewController;
 
 	private Scene currentScene;
 
@@ -35,6 +37,12 @@ public class ViewHandler {
 	public void openView(String id) {
 		switch (id)
 		{
+			case "login":
+				loginViewController = loadViewController("LoginView.fxml",loginViewController, viewModelFactory.getLoginViewModel());
+				break;
+			case "menu":
+				menuViewController = loadViewController("MenuView.fxml",menuViewController, viewModelFactory.getMenuViewModel());
+				break;
 			case "chess":
 				chessViewController = loadViewController("ChessBoard.fxml",chessViewController, viewModelFactory.getChessViewModel());
 				break;
