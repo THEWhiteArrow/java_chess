@@ -5,7 +5,7 @@ import model_client.ModelClient;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class CreateGameRoomViewModel implements PropertyChangeListener, ViewModel {
+public class CreateGameRoomViewModel extends ViewModel implements PropertyChangeListener {
 
 	private ViewState viewState;
 

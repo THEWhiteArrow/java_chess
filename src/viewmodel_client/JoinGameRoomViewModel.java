@@ -7,7 +7,7 @@ import model_client.ModelClient;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class JoinGameRoomViewModel implements PropertyChangeListener, ViewModel {
+public class JoinGameRoomViewModel extends ViewModel implements PropertyChangeListener {
 
 	@FXML private StringProperty idProperty;
 
