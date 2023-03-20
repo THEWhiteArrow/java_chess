@@ -12,77 +12,59 @@ import java.beans.PropertyChangeSupport;
 
 public class ModelManagerClient implements ModelClient, PropertyChangeListener {
 
-	private ClientModel clientModel;
+	private ClientConnector client;
 
-	public void ModelManagerClient() {
-		clientModel=null;
-	}
+	private PropertyChangeSupport property;
+
+	public ModelManagerClient() { }
 
 	public boolean connectToServer(String host, int port){
-		clientModel = new ClientConnector(host, port);
+		this.property = new PropertyChangeSupport(this);
+		this.client = new ClientConnector(host, port);
+		this.client.addListener(this);
 
 		return true;
 	}
 
-
-	/**
-	 * @see model-client.ModelClient#createGameRoom()
-	 *  
-	 */
-	public boolean createGameRoom(String id) {
-		return true;
+	public synchronized boolean createGameRoom(String id) {
+		return client.createGameRoom(id);
 	}
 
+	public synchronized boolean joinGameRoom(String id) {
 
-	/**
-	 * @see model-client.ModelClient#joinGameRoom(mediator-server.String)
-	 *  
-	 */
-	public void joinGameRoom(String id) {
-
+		return client.joinGameRoom(id);
 	}
 
-
-	/**
-	 * @see model-client.ModelClient#leaveGameRoom(mediator-server.String)
-	 *  
-	 */
-	public boolean leaveGameRoom(String id) {
+	public synchronized boolean leaveGameRoom(String id) {
 		return false;
 	}
 
 
-	/**
-	 * @see model-client.ModelClient#sendNotation(mediator-server.String, mediator-server.String)
-	 */
-	public void sendNotation(String roomId, String notation) {
+	public synchronized void sendNotation(String roomId, String notation) {
+		client.sendNotation(roomId,notation);
 
 	}
 
-
-	/**
-	 * @see model-client.ModelClient#getNotation(mediator-server.String)
-	 */
-	public String getNotation(String id) {
+	public synchronized String getNotation(String id) {
 		return null;
 	}
 
-
 	/**
-	 * @see model-client.ModelClient#displayMessage(mediator-server.String)
+	 * NOT BEING USED
 	 */
-	public void displayMessage(String msg) {
-
+	public synchronized void displayMessage(String msg) {
+		client.displayMessage(msg);
 	}
 
 	@Override
 	public void addListener(PropertyChangeListener listener) {
+		property.addPropertyChangeListener(listener);
 
 	}
 
 	@Override
 	public void removeListener(PropertyChangeListener listener) {
-
+		property.removePropertyChangeListener(listener);
 	}
 
 	@Override

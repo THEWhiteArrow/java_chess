@@ -74,7 +74,7 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 
 	}
 
-	@Override public boolean createGameRoom(String id)
+	@Override public synchronized boolean createGameRoom(String id)
 	{
 		GamePackage pkg = new GamePackage(GamePackage.CREATE,id,null,null);
 		Logger.log("sending create request...");
@@ -95,13 +95,22 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 			return true;
 
 //		fire error property event?
+
 		return false;
 	}
 
-	@Override public void joinGameRoom(String id)
+	@Override public synchronized boolean joinGameRoom(String id)
 	{
 		GamePackage gamePackage = new GamePackage(GamePackage.JOIN,id,null,null);
 		out.println(gamePackage);
+		try {
+			wait();
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+		if (receivedPackage!= null && GamePackage.JOIN.equals(receivedPackage.getType()))
+			return true;
+		return false;
 	}
 
 	@Override public synchronized boolean leaveGameRoom(String id)
@@ -111,17 +120,24 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 
 	@Override public synchronized void sendNotation(String roomId, String notation)
 	{
-		modelClient.sendNotation(roomId,notation);
+		GamePackage gamePackage = new GamePackage(GamePackage.NOTATION, roomId,notation,null);
+		String sendNotation = gson.toJson(gamePackage);
+		out.println(sendNotation);
 	}
 
 	@Override public String getNotation(String id)
 	{
+		receivedPackage =gson.fromJson(id, GamePackage.class);
+		if (receivedPackage.getType().equals(GamePackage.NOTATION))
+			return receivedPackage.getNotation();
 		return null;
 	}
 
 	@Override public void displayMessage(String msg)
 	{
-
+		GamePackage gamePackage = new GamePackage(null,null,null,msg);
+		String displayMessage = gson.toJson(gamePackage);
+		out.println(displayMessage);
 	}
 
 	@Override

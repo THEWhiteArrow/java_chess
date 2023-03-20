@@ -4,7 +4,7 @@ public interface ModelClient extends utility.observer.javaobserver.UnnamedProper
 
 	public  abstract  boolean createGameRoom(String id);
 
-	public abstract void joinGameRoom(String id);
+	public abstract boolean joinGameRoom(String id);
 
 	public abstract boolean leaveGameRoom(String id);
 

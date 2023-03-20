@@ -13,10 +13,13 @@ public class ClientReceiver implements Runnable {
 
 	private BufferedReader in;
 	private Gson gson;
+	private ClientConnector client;
 
-	private ClientConnector clientConnector;
+	public ClientReceiver(ClientConnector client, BufferedReader in) {
+		this.client = client;
+		this.in = in;
+		this.gson = new Gson();
 
-	public ClientReceiver(ClientConnector clientConnector, BufferedReader in) {
 
 
 	}
