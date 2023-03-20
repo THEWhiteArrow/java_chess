@@ -22,7 +22,8 @@ public class Chess {
 		Logger.log("inside setNoation method inside chess");
 		this.notation = notation;
 		for (ServerClientHandler player : serverClientHandler) {
-			player.sendNotationPackage(notation);
+			if(player!=null)
+				player.sendNotationPackage(notation);
 		}
 
 	}

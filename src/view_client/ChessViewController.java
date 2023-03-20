@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import util.DraggableMaker;
 import util.FENParser;
+import util.Logger;
 import util.Piece;
 import viewmodel_client.ChessViewModel;
 import viewmodel_client.ViewModel;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 
 public class ChessViewController extends ViewController {
 	@FXML private Pane piecesPane;
+	@FXML private Pane mainPane;
+	@FXML private GridPane grid;
 
 	private ChessViewModel viewModel;
 
@@ -32,12 +35,13 @@ public class ChessViewController extends ViewController {
 		this.root=root;
 
 
-
 		this.viewModel.getNotationProperty().addListener((obs,oldValue,newValue)->{
 			String notation = (String)newValue;
-			System.out.println(notation);
+			Logger.log(notation);
 
-			updatePieces(notation);
+			Platform.runLater(()->{
+				updatePieces(notation);
+			});
 
 		});
 		reset();
@@ -45,6 +49,17 @@ public class ChessViewController extends ViewController {
 
 	public Region getRoot(){
 		return root;
+	}
+
+
+	@FXML private void changeView(){
+		Platform.runLater( ()-> {
+			Logger.log("cahnge view");
+			piecesPane.setRotate(piecesPane.getRotate()+180.0);
+			for(Node node : piecesPane.getChildren())
+				node.setRotate(node.getRotate()+180.0);
+
+		});
 	}
 
 
@@ -61,7 +76,7 @@ public class ChessViewController extends ViewController {
 	public void updatePieces(String notation){
 		System.out.println("UPDATING PIECES...........");
 
-		piecesPane.getChildren().remove(0,32);
+		piecesPane.getChildren().remove(0,piecesPane.getChildren().size());
 
 
 
