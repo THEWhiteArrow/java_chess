@@ -1,5 +1,6 @@
 package model_client;
 
+import mediator_client.ClientConnector;
 import mediator_client.ClientModel;
 
 import java.beans.PropertyChangeListener;
@@ -9,7 +10,13 @@ public class ModelManagerClient implements ModelClient {
 	private ClientModel clientModel;
 
 	public void ModelManagerClient() {
+		clientModel=null;
+	}
 
+	public boolean connectToServer(String host, int port){
+		clientModel = new ClientConnector(host, port);
+
+		return true;
 	}
 
 

@@ -40,6 +40,7 @@ public class ClientConnector extends ClientModel implements ModelClient
 			this.gamePackage = null;
 			ClientReceiver  clientReceiver = new ClientReceiver(this,this.in);
 			Thread t1 =new Thread((clientReceiver));
+			t1.start();
 			this.property=new PropertyChangeSupport(this);
 
 
@@ -103,6 +104,11 @@ public class ClientConnector extends ClientModel implements ModelClient
 	@Override public void displayMessage(String msg)
 	{
 
+	}
+
+	@Override
+	public boolean connectToServer(String host, int port) {
+		return false;
 	}
 
 	@Override public void addListener(PropertyChangeListener listener)
