@@ -59,12 +59,10 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 	public synchronized void  receivedPackage(String json) { //This function might be private and without any arguments passed
 		// then we should check for a package being received by the inputStream (in.readline) and then check the type of this package.
 		Logger.log("received package");
-		receivedPackage =gson.fromJson(json, GamePackage.class);
+		receivedPackage = gson.fromJson(json, GamePackage.class);
 		switch (receivedPackage.getType()){
 			case GamePackage.CREATE, GamePackage.JOIN:
-				Logger.log("received create/join package");
 				notify();
-				Logger.log("notified threads?");
 				break;
 			default:
 				property.firePropertyChange(receivedPackage.getType(),null, receivedPackage);
@@ -101,9 +99,12 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 
 	@Override public synchronized boolean joinGameRoom(String id)
 	{
+		Logger.log("joining the room...");
 		GamePackage gamePackage = new GamePackage(GamePackage.JOIN,id,null,null);
-		out.println(gamePackage);
+		out.println(gson.toJson(gamePackage));
+		Logger.log("send join room request...");
 		try {
+			Logger.log("starting to wait...");
 			wait();
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
@@ -120,6 +121,7 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 
 	@Override public synchronized void sendNotation(String roomId, String notation)
 	{
+		Logger.log("CLIENT ROOM ID: "+roomId);
 		GamePackage gamePackage = new GamePackage(GamePackage.NOTATION, roomId,notation,null);
 		String sendNotation = gson.toJson(gamePackage);
 		out.println(sendNotation);

@@ -5,6 +5,7 @@ package model_client;
 import mediator_client.ClientConnector;
 
 import mediator_server.GamePackage;
+import util.Logger;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -16,10 +17,12 @@ public class ModelManagerClient implements ModelClient, PropertyChangeListener {
 
 	private PropertyChangeSupport property;
 
-	public ModelManagerClient() { }
+	public ModelManagerClient() {
+		this.property = new PropertyChangeSupport(this);
+	}
 
 	public boolean connectToServer(String host, int port){
-		this.property = new PropertyChangeSupport(this);
+
 		this.client = new ClientConnector(host, port);
 		this.client.addListener(this);
 
@@ -69,6 +72,7 @@ public class ModelManagerClient implements ModelClient, PropertyChangeListener {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
+		Logger.log("CLIENT MANAGER RECEIVED A PROPERTY CHANGE");
 		property.firePropertyChange(evt);
 	}
 }

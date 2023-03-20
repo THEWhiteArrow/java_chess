@@ -18,10 +18,12 @@ public class MenuViewModel extends ViewModel{
     }
 
     public boolean joinRoom(){
-       return model.joinGameRoom(roomIdProperty.get());
+        viewState.setRoomId(roomIdProperty.get());
+        return model.joinGameRoom(roomIdProperty.get());
     }
 
     public boolean createRoom(){
+        viewState.setRoomId(roomIdProperty.get());
         return model.createGameRoom(roomIdProperty.get());
     }
 
@@ -39,7 +41,7 @@ public class MenuViewModel extends ViewModel{
     }
     @Override
     public void clear() {
-        roomIdProperty.set(randomString(5));
+        roomIdProperty.set(randomString(3));
     }
 
 
