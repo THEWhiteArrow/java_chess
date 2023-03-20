@@ -18,11 +18,11 @@ public class GamePackage implements Serializable
 
 	private String error;
 
-	public GamePackage(String type) {
+	public GamePackage(String type,String roomID,String notation, String error) {
 	this.type = type;
-	this.notation= null;
-	this.error = null;
-	this.roomID = null;
+	this.notation= notation;
+	this.error = error;
+	this.roomID = roomID;
 	}
 
 	public String getType() {

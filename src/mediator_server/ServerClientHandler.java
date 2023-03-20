@@ -56,14 +56,14 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 	}
 
 	public void sendErrorPackage(String message) {
-		GamePackage gamePackage = new GamePackage(message);
+		GamePackage gamePackage = new GamePackage(GamePackage.ERROR,null,null,message);
 		String sendError = gson.toJson(gamePackage);
 		out.println(sendError);
 	}
 
 	public void sendNotationPackage(String notation) {
 
-		GamePackage gamePackage = new GamePackage(notation);
+		GamePackage gamePackage = new GamePackage(GamePackage.NOTATION, null,notation,null);
 		String sendError = gson.toJson(gamePackage);
 		out.println(sendError);
 	}
@@ -109,7 +109,8 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 
 	@Override public void propertyChange(PropertyChangeEvent evt)
 	{
-		GamePackage gamePackage = new GamePackage((String) evt.getNewValue());
+		GamePackage gamePackage = new GamePackage(null,null,null,
+				(String) evt.getNewValue());
 		out.println(gson.toJson(gamePackage));
 
 	}

@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Map;
 
-public class ClientConnector extends ClientModel implements ModelClient
+public class ClientConnector  implements ModelClient
 {
 
 	private GamePackage gamePackage;
@@ -40,6 +40,8 @@ public class ClientConnector extends ClientModel implements ModelClient
 			this.gamePackage = null;
 			ClientReceiver  clientReceiver = new ClientReceiver(this,this.in);
 			Thread t1 =new Thread((clientReceiver));
+			t1.setDaemon(true);
+			t1.start();
 			this.property=new PropertyChangeSupport(this);
 
 
@@ -52,7 +54,8 @@ public class ClientConnector extends ClientModel implements ModelClient
 
 	}
 
-	public void receivedPackage(GamePackage pkg) {
+	public void receivedPackage(GamePackage pkg) { //This function might be private and without any arguments passed
+		// then we should check for a package being received by the inputStream (in.readline) and then check the type of this package.
 		switch (pkg.getType())
 		{
 			case GamePackage.NOTATION ->
@@ -82,7 +85,8 @@ public class ClientConnector extends ClientModel implements ModelClient
 
 	@Override public void joinGameRoom(String id)
 	{
-
+		GamePackage gamePackage = new GamePackage(GamePackage.JOIN,id,null,null);
+		out.println(gamePackage);
 	}
 
 	@Override public boolean leaveGameRoom(String id)
