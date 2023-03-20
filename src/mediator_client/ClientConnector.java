@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import mediator_server.GamePackage;
 import model_client.ModelClient;
 import model_server.GameRoom;
+import util.Logger;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -15,11 +16,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Map;
 
-public class ClientConnector  implements ModelClient
+public class ClientConnector  implements ModelClient, utility.observer.javaobserver.UnnamedPropertyChangeSubject
 {
 
-	private GamePackage gamePackage;
-
+	private GamePackage receivedPackage;
 	private Gson gson;  // ADd to class diagram
 	private Socket socket;
 	private PropertyChangeSupport property;
@@ -38,7 +38,8 @@ public class ClientConnector  implements ModelClient
 			out = new PrintWriter(socket.getOutputStream(),true);
 			this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			this.out = new PrintWriter(socket.getOutputStream(),true);
-			this.gamePackage = null;
+			this.receivedPackage = null;
+			gson = new Gson();
 			ClientReceiver  clientReceiver = new ClientReceiver(this,this.in);
 			Thread t1 =new Thread((clientReceiver));
 			t1.setDaemon(true);
@@ -55,25 +56,19 @@ public class ClientConnector  implements ModelClient
 
 	}
 
-	public void receivedPackage(GamePackage pkg) { //This function might be private and without any arguments passed
+	public synchronized void  receivedPackage(String json) { //This function might be private and without any arguments passed
 		// then we should check for a package being received by the inputStream (in.readline) and then check the type of this package.
-		switch (pkg.getType())
-		{
-			case GamePackage.NOTATION ->
-			{
-				sendNotation(pkg.getRoomID(),pkg.getNotation());
+		Logger.log("received package");
+		receivedPackage =gson.fromJson(json, GamePackage.class);
+		switch (receivedPackage.getType()){
+			case GamePackage.CREATE, GamePackage.JOIN:
+				Logger.log("received create/join package");
+				notify();
+				Logger.log("notified threads?");
 				break;
-			}
-			case GamePackage.ERROR ->
-			{
-				displayMessage(pkg.getError());
-				break;
-			}
-			case	GamePackage.JOIN ->
-			{
-				joinGameRoom(pkg.getRoomID());
-				break;
-			}
+			default:
+				property.firePropertyChange(receivedPackage.getType(),null, receivedPackage);
+//				fire porpetruy chnage event?
 		}
 
 
@@ -82,15 +77,21 @@ public class ClientConnector  implements ModelClient
 	@Override public boolean createGameRoom(String id)
 	{
 		GamePackage pkg = new GamePackage(GamePackage.CREATE,id,null,null);
+		Logger.log("sending create request...");
 		out.println( gson.toJson(pkg) );
 
+		Logger.log("sent...");
 		try {
+			Logger.log("starting to wait...");
 			wait();
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		}
 
-		if(gamePackage!=null && GamePackage.CREATE.equals(gamePackage.getType()))
+
+
+		Logger.log("WORKSSSSSSSSSSSSSSSSSSSSS!!...");
+		if(receivedPackage!=null && GamePackage.CREATE.equals(receivedPackage.getType()))
 			return true;
 
 //		fire error property event?
@@ -103,12 +104,12 @@ public class ClientConnector  implements ModelClient
 		out.println(gamePackage);
 	}
 
-	@Override public boolean leaveGameRoom(String id)
+	@Override public synchronized boolean leaveGameRoom(String id)
 	{
 		return false;
 	}
 
-	@Override public void sendNotation(String roomId, String notation)
+	@Override public synchronized void sendNotation(String roomId, String notation)
 	{
 		modelClient.sendNotation(roomId,notation);
 	}
@@ -125,8 +126,11 @@ public class ClientConnector  implements ModelClient
 
 	@Override
 	public boolean connectToServer(String host, int port) {
+//		no purpose for that
 		return false;
 	}
+
+
 
 	@Override public void addListener(PropertyChangeListener listener)
 	{

@@ -1,11 +1,16 @@
 package model_client;
 
+
+
 import mediator_client.ClientConnector;
-import mediator_client.ClientModel;
 
+import mediator_server.GamePackage;
+
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
-public class ModelManagerClient implements ModelClient {
+public class ModelManagerClient implements ModelClient, PropertyChangeListener {
 
 	private ClientModel clientModel;
 
@@ -78,5 +83,10 @@ public class ModelManagerClient implements ModelClient {
 	@Override
 	public void removeListener(PropertyChangeListener listener) {
 
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		property.firePropertyChange(evt);
 	}
 }
