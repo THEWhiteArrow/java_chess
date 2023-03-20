@@ -101,9 +101,12 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 
 	@Override public synchronized boolean joinGameRoom(String id)
 	{
+		Logger.log("joining the room...");
 		GamePackage gamePackage = new GamePackage(GamePackage.JOIN,id,null,null);
-		out.println(gamePackage);
+		out.println(gson.toJson(gamePackage));
+		Logger.log("send join room request...");
 		try {
+			Logger.log("starting to wait...");
 			wait();
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);

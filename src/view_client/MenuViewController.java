@@ -34,6 +34,8 @@ public class MenuViewController extends ViewController {
     }
 
     public void joinRoom( ) {
-        viewModel.joinRoom();
+
+        if(viewModel.joinRoom())
+            viewHandler.openView("chess");
     }
 }
