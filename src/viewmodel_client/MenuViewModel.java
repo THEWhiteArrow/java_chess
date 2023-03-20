@@ -21,8 +21,8 @@ public class MenuViewModel extends ViewModel{
         return false;
     }
 
-    public String createRoom(){
-        return model.createGameRoom();
+    public boolean createRoom(){
+        return model.createGameRoom(roomIdProperty.get());
     }
 
 

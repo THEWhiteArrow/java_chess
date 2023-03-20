@@ -16,6 +16,8 @@ public class LoginViewController extends ViewController {
 	@FXML private TextField hostField;
 
 	@FXML private TextField portField;
+
+	@FXML private TextField nameField;
 	@FXML private Label errorLabel;
 
 	private LoginViewModel viewModel;
@@ -28,15 +30,13 @@ public class LoginViewController extends ViewController {
 		this.root = root;
 
 		hostField.textProperty().bindBidirectional( this.viewModel.getHostProperty());
-//		portField.textProperty().bindBidirectional( this.viewModel.getPortProperty());
 		Bindings.bindBidirectional(
 				portField.textProperty(),
 				this.viewModel.getPortProperty(),
 				new IntStringConverter()
 		);
-
 		errorLabel.textProperty().bind(this.viewModel.getErrorProperty());
-
+		nameField.textProperty().bindBidirectional(this.viewModel.getNameProperty());
 	}
 	@FXML private void connect() {
 

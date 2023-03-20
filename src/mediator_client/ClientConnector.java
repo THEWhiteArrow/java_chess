@@ -19,6 +19,7 @@ public class ClientConnector extends ClientModel implements ModelClient
 {
 
 	private GamePackage gamePackage;
+
 	private Gson gson;  // ADd to class diagram
 	private Socket socket;
 	private PropertyChangeSupport property;
@@ -76,9 +77,22 @@ public class ClientConnector extends ClientModel implements ModelClient
 
 	}
 
-	@Override public String createGameRoom()
+	@Override public boolean createGameRoom(String id)
 	{
-		return "NO-ID-YET";
+		GamePackage pkg = new GamePackage(GamePackage.CREATE).setRoomID(id);
+		out.println( gson.toJson(pkg) );
+
+		try {
+			wait();
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+
+		if(gamePackage!=null && GamePackage.CREATE.equals(gamePackage.getType()))
+			return true;
+
+//		fire error property event?
+		return false;
 	}
 
 	@Override public void joinGameRoom(String id)

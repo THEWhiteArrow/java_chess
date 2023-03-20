@@ -27,7 +27,7 @@ public class ViewHandler {
 
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		openView("chess");
+		openView("login");
 	}
 
 	public void closeView() {

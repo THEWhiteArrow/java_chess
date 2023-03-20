@@ -11,11 +11,32 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class LoginViewModel extends ViewModel implements PropertyChangeListener {
-
+	private final String[] names = {
+			"Liam",
+			"Olivia",
+			"Noah",
+			"Emma",
+			"Oliver",
+			"Ava",
+			"William",
+			"Sophia",
+			"Elijah",
+			"Isabella",
+			"James",
+			"Charlotte",
+			"Benjamin",
+			"Amelia",
+			"Lucas",
+			"Mia",
+			"Mason",
+			"Harper",
+			"Ethan",
+			"Evelyn"
+	};
 	private StringProperty hostProperty;
 	private IntegerProperty portProperty;
 
-
+	private StringProperty nameProperty;
 	private StringProperty errorProperty;
 
 	private ViewState viewState;
@@ -30,20 +51,28 @@ public class LoginViewModel extends ViewModel implements PropertyChangeListener 
 		hostProperty = new SimpleStringProperty();
 		portProperty = new SimpleIntegerProperty();
 		errorProperty = new SimpleStringProperty();
+		nameProperty= new SimpleStringProperty();
 	}
 
 	public boolean connect() {
 		String host = hostProperty.get();
 		int port = portProperty.get();
+		String name = nameProperty.get();
 
-		return model.connectToServer(host,port);
+
+		if( model.connectToServer(host,port) ){
+			this.viewState.setName(name);
+			return true;
+		}else
+			return false;
 
 	}
 
 	public void clear() {
-		hostProperty.set("");
-		portProperty.set(0);
+		hostProperty.set("localhost");
+		portProperty.set(6789);
 		errorProperty.set("");
+		nameProperty.set( names[(int)Math.floor(Math.random()*names.length)]);
 	}
 
 
@@ -57,7 +86,7 @@ public class LoginViewModel extends ViewModel implements PropertyChangeListener 
 		return hostProperty;
 	}
 
-
+	public StringProperty getNameProperty(){return nameProperty;}
 
 	public StringProperty getErrorProperty() {
 		return errorProperty;

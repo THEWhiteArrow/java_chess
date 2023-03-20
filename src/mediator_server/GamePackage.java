@@ -11,6 +11,8 @@ public class GamePackage implements Serializable
 
 	public static final String JOIN = "JOIN";
 
+	public static final String CREATE = "CREATE";
+
 	private String type;
 
 	private String notation;
@@ -19,10 +21,10 @@ public class GamePackage implements Serializable
 	private String error;
 
 	public GamePackage(String type) {
-	this.type = type;
-	this.notation= null;
-	this.error = null;
-	this.roomID = null;
+		this.type = type;
+		this.notation= null;
+		this.error = null;
+		this.roomID = null;
 	}
 
 	public String getType() {
@@ -37,23 +39,23 @@ public class GamePackage implements Serializable
 		return error;
 	}
 
-	public void setNotation(String notation) {
+	public GamePackage setNotation(String notation) {
 		this.notation = notation;
-
+		return this;
 	}
 	public String getRoomID()
 	{
 		return roomID;
 	}
 
-	public void setError(String error) {
+	public GamePackage setError(String error) {
 		this.error = error;
-
+		return this;
 	}
 
-	public void setRoomID(String roomID)
+	public GamePackage setRoomID(String roomID)
 	{
 		this.roomID = roomID;
-
+		return this;
 	}
 }
