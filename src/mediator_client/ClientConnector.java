@@ -91,7 +91,7 @@ public class ClientConnector extends ClientModel implements ModelClient
 
 	@Override public void sendNotation(String roomId, String notation)
 	{
-
+		modelClient.sendNotation(roomId,notation);
 	}
 
 	@Override public String getNotation(String id)
@@ -106,11 +106,11 @@ public class ClientConnector extends ClientModel implements ModelClient
 
 	@Override public void addListener(PropertyChangeListener listener)
 	{
-
+		property.addPropertyChangeListener(listener);
 	}
 
 	@Override public void removeListener(PropertyChangeListener listener)
 	{
-
+		property.removePropertyChangeListener(listener);
 	}
 }
