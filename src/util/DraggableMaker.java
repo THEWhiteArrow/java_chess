@@ -17,9 +17,7 @@ public class DraggableMaker {
         startX = node.getLayoutX();
         startY = node.getLayoutY();
 
-        node.setOnDragDetected(evt -> {
-//            System.out.println("DETECTED DRAG & DROP");
-        });
+
 
         node.setOnMouseDragged(evt->{
             if(startX==0.0){

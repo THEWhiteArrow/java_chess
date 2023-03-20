@@ -5,6 +5,7 @@ package mediator_server;
 import model_server.ModelServer;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -19,16 +20,17 @@ public class ServerConnector {
 	public ServerConnector(ModelServer model, int port) {
 		this.port = port;
 		this.modelServer = model;
+		System.out.println("Server starting ....");
 		try
 		{
 			this.welcomeSocket = new ServerSocket(port);
+			System.out.println("Server running: "+ InetAddress.getLocalHost().getHostAddress()+" | "+port);
 		}
 		catch (IOException e)
 		{
 			throw new RuntimeException(e);
 		}
-		System.out.println("Server starting ....");
-		System.out.println("Server running....");
+
 		start();
 
 	}
@@ -38,9 +40,13 @@ public class ServerConnector {
 		try
 		{
 			Socket socket = welcomeSocket.accept();
+
 			ServerClientHandler serverClientHandler = new ServerClientHandler(modelServer,socket);
+			Thread t = new Thread(serverClientHandler);
+			t.setDaemon(true);
+			t.start();
+
 			System.out.println("Client Connected");
-			serverClientHandler.run();
 		}
 		catch (IOException e)
 		{

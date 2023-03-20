@@ -56,7 +56,8 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 	}
 
 	public void sendErrorPackage(String message) {
-		GamePackage gamePackage = new GamePackage(message);
+		GamePackage gamePackage = new GamePackage(GamePackage.ERROR);
+		gamePackage.setError(message);
 		String sendError = gson.toJson(gamePackage);
 		out.println(sendError);
 	}
