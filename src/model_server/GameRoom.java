@@ -2,7 +2,6 @@ package model_server ;
 
 import mediator_server.ServerClientHandler;
 
-import java.net.Socket;
 
 public class GameRoom {
 	private String id;

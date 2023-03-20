@@ -63,8 +63,8 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 		out.println(sendError);
 	}
 
-	public void sendNotationPackage(String notation) {
-
+	public synchronized void sendNotationPackage(String notation) {
+		Logger.log("sending the notation from server to client");
 		GamePackage gamePackage = new GamePackage(GamePackage.NOTATION, null,notation,null);
 		String sendError = gson.toJson(gamePackage);
 		out.println(sendError);
@@ -82,7 +82,9 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 
 				{
 					case GamePackage.NOTATION:
+
 						String id =gamePackageReceived.getRoomID();
+						Logger.log("id null? : "+id);
 						String notation = gamePackageReceived.getNotation();
 						model.updateChessGameRoom(id,notation);
 						Logger.log("working notation...");

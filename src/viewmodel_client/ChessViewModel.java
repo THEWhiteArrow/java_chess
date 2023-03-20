@@ -22,6 +22,7 @@ public class ChessViewModel extends ViewModel implements PropertyChangeListener 
 		this.model=model;
 		this.viewState=viewState;
 		this.notationProperty = new SimpleStringProperty();
+		this.model.addListener(this);
 	}
 
 	public void clear() {
