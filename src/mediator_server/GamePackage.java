@@ -10,6 +10,7 @@ public class GamePackage implements Serializable
 	public static final String NOTATION = "NOTATION";
 
 	public static final String JOIN = "JOIN";
+	public static final String CREATE = "CREATE";
 
 	private String type;
 
