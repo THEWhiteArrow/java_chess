@@ -2,6 +2,8 @@ package mediator_server;
 
 import com.google.gson.Gson;
 import model_server.ModelServer;
+import util.Logger;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
@@ -95,6 +97,11 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 						String roomID = gamePackageReceived.getRoomID();
 						model.joinRoom(roomID,socket);
 						out.println("JOIN WORKING");
+						break;
+					case GamePackage.CREATE:
+						String roomId = gamePackageReceived.getRoomID();
+						Logger.log("requested a new room creation...");
+						break;
 				}
 
 			}

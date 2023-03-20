@@ -28,8 +28,7 @@ public class MenuViewController extends ViewController {
 
     public void createRoom( ) {
 
-        String room = viewModel.createRoom();
-        if(room!=null && room.length()>0){
+        if(viewModel.createRoom()){
             viewHandler.openView("chess");
         }
     }
