@@ -10,10 +10,13 @@ public class Chess {
 	private String notation;
 
 
-	private ServerClientHandler[] serverClientHandler;
-
+	private ServerClientHandler[] serverClientHandler = new ServerClientHandler[2];
 
 	public void setNotation(String notation) {
+		this.notation = notation;
+		for (ServerClientHandler player : serverClientHandler) {
+			player.sendNotationPackage(notation);
+		}
 
 	}
 
@@ -21,8 +24,14 @@ public class Chess {
 		return null;
 	}
 
-	private void notifyPlayers() {
 
+	public void addPlayer(ServerClientHandler player)
+	{
+		if (serverClientHandler[0]==null)
+		{
+			serverClientHandler[0] =player;
+		}
+		else serverClientHandler[1]= player;
 	}
 
 }

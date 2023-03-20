@@ -2,9 +2,9 @@ package model_client;
 
 public interface ModelClient extends utility.observer.javaobserver.UnnamedPropertyChangeSubject {
 
-	public abstract boolean createGameRoom(String id);
+	public  abstract  boolean createGameRoom(String id);
 
-	public abstract void joinGameRoom(String id);
+	public abstract boolean joinGameRoom(String id);
 
 	public abstract boolean leaveGameRoom(String id);
 

@@ -85,7 +85,7 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 						String id =gamePackageReceived.getRoomID();
 						String notation = gamePackageReceived.getNotation();
 						model.updateChessGameRoom(id,notation);
-						out.println("working notation");
+						Logger.log("working notation...");
 						break;
 
 					case GamePackage.ERROR:
@@ -95,12 +95,15 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 
 					case GamePackage.JOIN:
 						String roomID = gamePackageReceived.getRoomID();
-						model.joinRoom(roomID,socket);
-						out.println("JOIN WORKING");
+						model.joinRoom(roomID,this);
+						Logger.log("JOIN WORKING");
+						out.println(gson.toJson(new GamePackage(GamePackage.JOIN,gamePackageReceived.getRoomID(),null,null)));
 						break;
 					case GamePackage.CREATE:
 						String roomId = gamePackageReceived.getRoomID();
 						Logger.log("requested a new room creation...");
+						model.createGameRoom(roomId,this);
+						out.println( gson.toJson(new GamePackage(GamePackage.CREATE,null,null,null)));
 						break;
 				}
 

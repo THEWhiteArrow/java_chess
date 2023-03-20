@@ -1,6 +1,7 @@
 package viewmodel_client;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import mediator_server.GamePackage;
 import model_client.ModelClient;
 
 import java.beans.PropertyChangeEvent;
@@ -39,7 +40,17 @@ public class ChessViewModel extends ViewModel implements PropertyChangeListener 
 	 *  
 	 */
 	public void propertyChange(PropertyChangeEvent evt) {
+		String type = evt.getPropertyName();
+		GamePackage pkg = (GamePackage) evt.getNewValue();
 
+		switch(type){
+			case GamePackage.ERROR:
+//				no error property yet
+				break;
+			case GamePackage.NOTATION:
+				notationProperty.set(pkg.getNotation());
+				break;
+		}
 	}
 
 }

@@ -1,37 +1,64 @@
 package model_server;
 
+import mediator_server.ServerClientHandler;
+import util.Logger;
+
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ModelManagerServer implements ModelServer {
 
-	private GameRoom gameRoom;
+	private ArrayList<GameRoom> rooms;
 
 	public ModelManagerServer() {
-
+		rooms= new ArrayList<>();
 	}
 
 	@Override
-	public String createGameRoom(Socket socket) {
+	public synchronized boolean createGameRoom(String id, ServerClientHandler clientHandler) {
+//		account for the case when room of given id already exists
+		GameRoom room = new GameRoom(id);
+		room.addChessPlayer(clientHandler);
+		rooms.add(room);
+		Logger.log("Successfully added a new room: {id:"+id+"}");
+		return true;
+	}
+
+	public synchronized GameRoom getGameRoomById(String id){
+		if(id==null)return null;
+		for(GameRoom room : rooms){
+			if(id.equals(room.getId()))
+				return room;
+		}
 		return null;
 	}
 
 	@Override
-	public boolean joinRoom(String id, Socket socket) {
+	public synchronized boolean joinRoom(String id, ServerClientHandler clientHandler) {
+		GameRoom room = getGameRoomById(id);
+		if(room==null)return false;
+
+		room.addChessPlayer(clientHandler);
+
+		return true;
+	}
+
+	@Override
+	public synchronized boolean updateChessGameRoom(String id, String notation) {
+		GameRoom room = getGameRoomById(id);
+		if(room==null)return false;
+
+		room.getChessGame().setNotation(notation);
+		return true;
+	}
+
+	@Override
+	public synchronized boolean leaveGameRoom(String id) {
 		return false;
 	}
 
 	@Override
-	public boolean updateChessGameRoom(String id, String notation) {
-		return false;
-	}
-
-	@Override
-	public boolean leaveGameRoom(String id) {
-		return false;
-	}
-
-	@Override
-	public String getNotation(String id) {
+	public synchronized String getNotation(String id) {
 		return null;
 	}
 }

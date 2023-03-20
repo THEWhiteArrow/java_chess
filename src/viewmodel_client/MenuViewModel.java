@@ -18,7 +18,7 @@ public class MenuViewModel extends ViewModel{
     }
 
     public boolean joinRoom(){
-        return false;
+       return model.joinGameRoom(roomIdProperty.get());
     }
 
     public boolean createRoom(){
@@ -30,9 +30,16 @@ public class MenuViewModel extends ViewModel{
         return roomIdProperty;
     }
 
+    public String randomString(int n){
+        String ans = "";
+        while(n-->0)
+            ans+=""+(char)((int)(Math.random()*(90-65+1))+65);
+
+        return ans;
+    }
     @Override
     public void clear() {
-        roomIdProperty.set("");
+        roomIdProperty.set(randomString(5));
     }
 
 
