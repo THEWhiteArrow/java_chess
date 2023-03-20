@@ -1,6 +1,8 @@
 package view_client;
 
 import javafx.fxml.FXML;
+import javafx.scene.layout.Region;
+import viewmodel_client.ViewModel;
 
 public class CreateGameViewController extends ViewController {
 
@@ -13,6 +15,10 @@ public class CreateGameViewController extends ViewController {
 	}
 
 
+	@Override
+	public void init(ViewHandler viewHandler, ViewModel viewModel, Region root) {
+
+	}
 
 	/**
 	 * @see view-client.ViewController#reset()

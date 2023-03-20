@@ -12,30 +12,28 @@ import util.DraggableMaker;
 import util.FENParser;
 import util.Piece;
 import viewmodel_client.ChessViewModel;
+import viewmodel_client.ViewModel;
 
 import java.io.File;
 import java.util.ArrayList;
 
 
-public class ChessViewController  {
+public class ChessViewController extends ViewController {
 	@FXML private Pane piecesPane;
 
-	protected Region root;
-
-	protected ViewHandler viewHandler;
-
-	protected ChessViewModel viewModel;
+	private ChessViewModel viewModel;
 
 
 
-	public void init(ViewHandler viewHandler, ChessViewModel viewModel, Region root){
+
+	public void init(ViewHandler viewHandler, ViewModel viewModel, Region root){
 		this.viewHandler=viewHandler;
-		this.viewModel=viewModel;
+		this.viewModel= (ChessViewModel) viewModel;
 		this.root=root;
 
 
 
-		viewModel.getNotationProperty().addListener((obs,oldValue,newValue)->{
+		this.viewModel.getNotationProperty().addListener((obs,oldValue,newValue)->{
 			String notation = (String)newValue;
 			System.out.println(notation);
 
