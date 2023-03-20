@@ -53,13 +53,14 @@ public class ChessViewController extends ViewController {
 
 
 	@FXML private void changeView(){
-		Platform.runLater( ()-> {
-			Logger.log("cahnge view");
-			piecesPane.setRotate(piecesPane.getRotate()+180.0);
-			for(Node node : piecesPane.getChildren())
-				node.setRotate(node.getRotate()+180.0);
-
-		});
+//		Platform.runLater( ()-> {
+//			Logger.log("cahnge view");
+//			piecesPane.setRotate(piecesPane.getRotate()+180.0);
+//			for(Node node : piecesPane.getChildren())
+//				node.setRotate(node.getRotate()+180.0);
+//
+//		});
+		viewModel.changeView();
 	}
 
 

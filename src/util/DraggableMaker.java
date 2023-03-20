@@ -1,12 +1,10 @@
 package util;
 
 import javafx.scene.Node;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
-import javafx.scene.layout.GridPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import view_client.ChessViewController;
+
 
 public class DraggableMaker {
     private double startX=0.0,startY=0.0;
@@ -20,6 +18,7 @@ public class DraggableMaker {
 
 
         node.setOnMouseDragged(evt->{
+            node.toFront();
             if(startX==0.0){
                 startX= evt.getSceneX();
                 startY= evt.getSceneY();
@@ -47,9 +46,17 @@ public class DraggableMaker {
                 int snapY =((int) Math.floor((y-100)/50))*50+105;
 
                 for( Node p : picesPane.getChildren()){
-                    if( p.getLayoutX()==snapX && p.getLayoutY()==snapY) {
+
+                    if( p.getLayoutX()==snapX && p.getLayoutY()==snapY && p!=node) {
+
+                        if( ((ImageView)node).getImage().getUrl().contains("white")== ((ImageView)p).getImage().getUrl().contains("white")){
+//                        you are tying to move the piece to the filed with YOUR another piece so its not allowed
+                            node.setLayoutX(startX);
+                            node.setLayoutY(startY);
+                            return;
+                        }
+
                         picesPane.getChildren().remove(p);
-//                        System.out.println("Captured : " +FENParser.calculateFieldName(snapX,snapY));
                         break;
                     }
                 }

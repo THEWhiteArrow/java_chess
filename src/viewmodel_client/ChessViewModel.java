@@ -10,6 +10,7 @@ import java.beans.PropertyChangeListener;
 
 public class ChessViewModel extends ViewModel implements PropertyChangeListener  {
 
+	private boolean isWhite = true;
 	private final String FEN="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 	private StringProperty notationProperty;
 
@@ -30,12 +31,23 @@ public class ChessViewModel extends ViewModel implements PropertyChangeListener 
 	}
 
 	public void sendNotation(String notation) {
-		model.sendNotation(viewState.getRoomId(), notation);
+
+		if( isWhite ) model.sendNotation(viewState.getRoomId(), notation);
+		else {
+			StringBuilder builder = new StringBuilder(notationProperty.get().split(" ")[0]);
+			model.sendNotation(viewState.getRoomId(), String.valueOf(builder.reverse()));
+		}
+
 	}
 
 	public StringProperty getNotationProperty(){return notationProperty;}
 
 
+	public void changeView(){
+		isWhite = !isWhite;
+		StringBuilder builder = new StringBuilder(notationProperty.get().split(" ")[0]);
+		notationProperty.set(String.valueOf(builder.reverse()));
+	}
 	/**
 	 * @see java::beans::PropertyChangeListener#propertyChange(PropertyChangeEvent)
 	 *  
@@ -49,7 +61,11 @@ public class ChessViewModel extends ViewModel implements PropertyChangeListener 
 //				no error property yet
 				break;
 			case GamePackage.NOTATION:
-				notationProperty.set(pkg.getNotation());
+				if( isWhite) notationProperty.set(pkg.getNotation());
+				else {
+					StringBuilder builder = new StringBuilder(pkg.getNotation().split(" ")[0]);
+					notationProperty.set(String.valueOf(builder.reverse()));
+				}
 				break;
 		}
 	}
