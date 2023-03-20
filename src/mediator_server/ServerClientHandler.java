@@ -97,6 +97,7 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 						String roomID = gamePackageReceived.getRoomID();
 						model.joinRoom(roomID,this);
 						Logger.log("JOIN WORKING");
+						out.println(gson.toJson(new GamePackage(GamePackage.JOIN,gamePackageReceived.getRoomID(),null,null)));
 						break;
 					case GamePackage.CREATE:
 						String roomId = gamePackageReceived.getRoomID();
