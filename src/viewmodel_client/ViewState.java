@@ -21,19 +21,19 @@ public class ViewState {
 	}
 
 	public String getNotation() {
-		return null;
+		return notation;
 	}
 
 	public String getRoomId() {
-		return null;
+		return roomId;
 	}
 
 	public void setNotation(String notation) {
-
+		this.notation=notation;
 	}
 
 	public void setRoomId(String roomId) {
-
+		this.roomId=roomId;
 	}
 
 }
