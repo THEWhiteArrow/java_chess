@@ -24,8 +24,8 @@ public class ModelManagerClient implements ModelClient {
 	 * @see model-client.ModelClient#createGameRoom()
 	 *  
 	 */
-	public String createGameRoom() {
-		return null;
+	public boolean createGameRoom(String id) {
+		return true;
 	}
 
 

@@ -6,8 +6,18 @@ public class ViewState {
 
 	private String roomId;
 
+	private String name;
+
 	public ViewState() {
 
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getNotation() {
