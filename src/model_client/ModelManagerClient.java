@@ -54,7 +54,7 @@ public class ModelManagerClient implements ModelClient, PropertyChangeListener {
 	}
 
 	@Override
-	public ArrayList<String> getAllChat(String roomId) {
+	public synchronized ArrayList<String> getAllChat(String roomId) {
 		return client.getAllChat(roomId);
 	}
 

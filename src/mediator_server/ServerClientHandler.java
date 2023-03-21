@@ -75,6 +75,10 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 
 	public synchronized  void sendChatPackage(String message){
 		Logger.log("prepared to send a chat message but not sending yet... " + message);
+
+		ChatPackage chatPackage = new ChatPackage(ChatPackage.CHAT, null,null,message);
+		String sendChatPackage = gson.toJson(chatPackage);
+		out.println(sendChatPackage);
 	}
 
 	public synchronized  void sendChatListPackage(ArrayList<String> chats){

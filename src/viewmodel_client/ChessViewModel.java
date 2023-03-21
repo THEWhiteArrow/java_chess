@@ -11,6 +11,7 @@ import util.ChatPackage;
 import javax.tools.JavaCompiler;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 
 public class ChessViewModel extends ViewModel implements PropertyChangeListener  {

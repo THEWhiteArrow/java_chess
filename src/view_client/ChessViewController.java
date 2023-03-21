@@ -39,7 +39,9 @@ public class ChessViewController extends ViewController {
 		this.viewHandler=viewHandler;
 		this.viewModel= (ChessViewModel) viewModel;
 		this.root=root;
-
+		Logger.log("Items being set");
+		listView.setItems(this.viewModel.getChatList());
+		Logger.log("Items  set");
 
 		this.viewModel.getNotationProperty().addListener((obs,oldValue,newValue)->{
 			// here with event notation sth wrong

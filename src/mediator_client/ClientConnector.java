@@ -89,7 +89,7 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 	}
 
 
-	public ArrayList<String> getAllChat(String roomId){
+	public synchronized ArrayList<String> getAllChat(String roomId){
 		out.println( gson.toJson(  new ChatPackage("GET",roomId,null,null)) );
 
 		try {
