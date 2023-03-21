@@ -10,6 +10,7 @@ import util.Logger;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 
 public class ModelManagerClient implements ModelClient, PropertyChangeListener {
 
@@ -50,6 +51,11 @@ public class ModelManagerClient implements ModelClient, PropertyChangeListener {
 
 	public synchronized void sendChatMessage(String id, String username,String message){
 		client.sendChatMessage( id, username,  message);
+	}
+
+	@Override
+	public ArrayList<String> getAllChat(String roomId) {
+		return client.getAllChat(roomId);
 	}
 
 	public synchronized String getNotation(String id) {

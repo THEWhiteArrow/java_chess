@@ -1,5 +1,7 @@
 package model_client;
 
+import java.util.ArrayList;
+
 public interface ModelClient extends utility.observer.javaobserver.UnnamedPropertyChangeSubject {
 
 	public  abstract  boolean createGameRoom(String id);
@@ -17,4 +19,6 @@ public interface ModelClient extends utility.observer.javaobserver.UnnamedProper
 	boolean connectToServer(String host, int port);
 
 	void sendChatMessage(String roomId, String name, String s);
+
+    ArrayList<String> getAllChat(String roomId);
 }

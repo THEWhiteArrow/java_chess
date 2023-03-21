@@ -57,6 +57,11 @@ public class ModelManagerServer implements ModelServer {
 	}
 
 	@Override
+	public ArrayList<String> getAllChats(String roomId) {
+		return getGameRoomById(roomId).getChessGame().getChatLogs();
+	}
+
+	@Override
 	public synchronized boolean updateChessGameRoom(String id, String notation) {
 		Logger.log("UPDATE ROOM ID: "+id);
 		GameRoom room = getGameRoomById(id);

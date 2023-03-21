@@ -1,15 +1,21 @@
 package viewmodel_client;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import mediator_server.GamePackage;
 import model_client.ModelClient;
+import util.ChatPackage;
 
+import javax.tools.JavaCompiler;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 
 public class ChessViewModel extends ViewModel implements PropertyChangeListener  {
 
+	private ObservableList<String> chatList;
 	private boolean isWhite = true;
 	private final String FEN="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 	private StringProperty notationProperty, chatProperty;
@@ -25,10 +31,26 @@ public class ChessViewModel extends ViewModel implements PropertyChangeListener 
 		this.notationProperty = new SimpleStringProperty();
 		this.chatProperty = new SimpleStringProperty();
 		this.model.addListener(this);
+
+		chatList = FXCollections.observableArrayList();
+	}
+
+	public ObservableList<String> getChatList(){
+		return chatList;
 	}
 
 	public void clear() {
+
 		this.notationProperty.set(FEN);
+		loadChat();
+	}
+
+	private synchronized  void loadChat(){
+		Platform.runLater( () -> {
+			chatList.clear();
+			for(String chat : getChat())
+				chatList.add(0,chat);
+		});
 	}
 
 	public void sendNotation(String notation) {
@@ -59,24 +81,35 @@ public class ChessViewModel extends ViewModel implements PropertyChangeListener 
 		}
 		notationProperty.set(String.valueOf(builder.reverse()));
 	}
+
+	public synchronized ArrayList<String> getChat()
+	{
+		return model.getAllChat(viewState.getRoomId());
+	}
+
 	/**
 	 * @see java::beans::PropertyChangeListener#propertyChange(PropertyChangeEvent)
 	 *  
 	 */
 	public void propertyChange(PropertyChangeEvent evt) {
 		String type = evt.getPropertyName();
-		GamePackage pkg = (GamePackage) evt.getNewValue();
 
 		switch(type){
 			case GamePackage.ERROR:
 //				no error property yet
 				break;
 			case GamePackage.NOTATION:
+				GamePackage pkg = (GamePackage) evt.getNewValue();
 				if( isWhite) notationProperty.set(pkg.getNotation());
 				else {
 					StringBuilder builder = new StringBuilder(pkg.getNotation().split(" ")[0]);
 					notationProperty.set(String.valueOf(builder.reverse()));
 				}
+				break;
+			case "CHAT":
+				Platform.runLater( ()->{
+					chatList.add(0,(String)evt.getNewValue());
+				});
 				break;
 		}
 	}

@@ -3,6 +3,7 @@ package mediator_server;
 import com.google.gson.Gson;
 import model_server.ModelServer;
 import util.ChatPackage;
+import util.ChatPackageList;
 import util.Logger;
 
 import java.beans.PropertyChangeEvent;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class ServerClientHandler implements Runnable, PropertyChangeListener
@@ -75,6 +77,12 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 		Logger.log("prepared to send a chat message but not sending yet... " + message);
 	}
 
+	public synchronized  void sendChatListPackage(ArrayList<String> chats){
+		Logger.log("sending chat list");
+		ChatPackageList chatPackageList = new ChatPackageList(chats);
+		out.println( gson.toJson(chatPackageList) );
+	}
+
 	public void run() {
 		while (true)
 		{
@@ -91,7 +99,12 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 					String message = chatPackageReceived.getMessage();
 
 					model.addChatMessage(roomId,username,message);
-				}else{
+				}
+				else if(pkg.get("type").equals("GET")){
+					ChatPackage chatPackageReceived = gson.fromJson(receive, ChatPackage.class);
+ 					sendChatListPackage( model.getAllChats(chatPackageReceived.getRoomId()) );
+				}
+				else{
 
 					GamePackage gamePackageReceived = gson.fromJson(receive, GamePackage.class);
 

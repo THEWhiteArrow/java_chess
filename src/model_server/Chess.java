@@ -60,4 +60,9 @@ public class Chess {
 		}
 	}
 
+
+	public ArrayList<String> getChatLogs(){
+		return chatLogs;
+	}
+
 }

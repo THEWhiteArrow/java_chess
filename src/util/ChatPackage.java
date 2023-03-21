@@ -3,9 +3,13 @@ package util;
 import java.io.Serializable;
 
 public class ChatPackage implements Serializable {
-    private final String type = "CHAT";
+    public final static String CHAT = "CHAT";
+    public final static String GET = "GET";
+
+    private String type;
     private String username,message,roomId;
-    public ChatPackage(String roomId,String username, String message){
+    public ChatPackage(String type,String roomId,String username, String message){
+        this.type = type;
         this.username=username;
         this.message=message;
         this.roomId=roomId;
