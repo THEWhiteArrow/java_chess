@@ -6,6 +6,7 @@ import mediator_server.GamePackage;
 import model_client.ModelClient;
 import model_server.GameRoom;
 import util.ChatPackage;
+import util.ChatPackageList;
 import util.Logger;
 
 import java.beans.PropertyChangeListener;
@@ -15,12 +16,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class ClientConnector  implements ModelClient, utility.observer.javaobserver.UnnamedPropertyChangeSubject
 {
 
 	private GamePackage receivedPackage;
+	private ChatPackageList chatPackageList;
 	private Gson gson;  // ADd to class diagram
 	private Socket socket;
 	private PropertyChangeSupport property;
@@ -40,6 +43,7 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 			this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			this.out = new PrintWriter(socket.getOutputStream(),true);
 			this.receivedPackage = null;
+			this.chatPackageList=null;
 			gson = new Gson();
 			ClientReceiver  clientReceiver = new ClientReceiver(this,this.in);
 			Thread t1 =new Thread((clientReceiver));
@@ -60,21 +64,47 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 	public synchronized void  receivedPackage(String json) { //This function might be private and without any arguments passed
 		// then we should check for a package being received by the inputStream (in.readline) and then check the type of this package.
 		Logger.log("received package");
-		receivedPackage = gson.fromJson(json, GamePackage.class);
-		switch (receivedPackage.getType()){
-			case GamePackage.CREATE, GamePackage.JOIN:
-				notify();
-				break;
-			default:
-				property.firePropertyChange(receivedPackage.getType(),null, receivedPackage);
-//				fire porpetruy chnage event?
+		Map<String,String> pkgMap = gson.fromJson(json, Map.class);
+		if(pkgMap.get("type").equals("CHAT")){
+			ChatPackage chatPkg = gson.fromJson(json,ChatPackage.class);
+			property.firePropertyChange("CHAT",null, chatPkg.getMessage());
+		}
+		else if(pkgMap.get("type").equals("CHAT-LIST")){
+			chatPackageList = gson.fromJson(json, ChatPackageList.class);
+			notify();
+		}
+		else{
+			receivedPackage = gson.fromJson(json, GamePackage.class);
+			switch (receivedPackage.getType()){
+				case GamePackage.CREATE, GamePackage.JOIN:
+					notify();
+					break;
+				default:
+					property.firePropertyChange(receivedPackage.getType(),null, receivedPackage);
+
+			}
 		}
 
 
 	}
 
+
+	public ArrayList<String> getAllChat(String roomId){
+		out.println( gson.toJson(  new ChatPackage("GET",roomId,null,null)) );
+
+		try {
+			wait();
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+
+
+		return chatPackageList.getChats();
+	}
+
+
 	public synchronized void sendChatMessage(String id, String username, String message){
-		ChatPackage pkg = new ChatPackage(id,username,message);
+		ChatPackage pkg = new ChatPackage(ChatPackage.CHAT,id,username,message);
 		String json = gson.toJson(pkg);
 		Logger.log("sending chat message...");
 		out.println(json);

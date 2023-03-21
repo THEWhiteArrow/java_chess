@@ -276,9 +276,9 @@
             <Font size="11.0" />
          </font>
       </Button>
-      <ScrollPane layoutX="50.0" layoutY="516.0" prefHeight="89.0" prefWidth="600.0">
+      <ScrollPane layoutX="50.0" layoutY="516.0" prefHeight="90.0" prefWidth="600.0">
          <content>
-            <ListView fx:id="listView" prefHeight="103.0" prefWidth="585.5" style="-fx-background-color: #E8EAE2;" />
+            <ListView fx:id="listView" prefHeight="88.0" prefWidth="598.0" style="-fx-background-color: #E8EAE2;" />
          </content>
       </ScrollPane>
       <TextField fx:id="chatField" layoutX="50.0" layoutY="618.0" onAction="#enterPressed" prefHeight="40.0" prefWidth="600.0" promptText="Chat with your opponent" style="-fx-background-color: #E8EAE2;" />
