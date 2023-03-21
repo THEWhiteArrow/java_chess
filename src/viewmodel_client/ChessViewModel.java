@@ -40,6 +40,11 @@ public class ChessViewModel extends ViewModel implements PropertyChangeListener 
 		return chatList;
 	}
 
+
+public synchronized boolean setSpectator()
+{
+	return model.setSpectator();
+}
 	public synchronized void clear() {
 
 		this.notationProperty.set(FEN);
@@ -89,10 +94,6 @@ public class ChessViewModel extends ViewModel implements PropertyChangeListener 
 		return model.getAllChat(viewState.getRoomId());
 	}
 
-	/**
-	 * @see java::beans::PropertyChangeListener#propertyChange(PropertyChangeEvent)
-	 *  
-	 */
 	public void propertyChange(PropertyChangeEvent evt) {
 		String type = evt.getPropertyName();
 

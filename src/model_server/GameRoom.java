@@ -28,4 +28,13 @@ public class GameRoom {
 	public void addChessChatMessage(String username, String message){
 		chess.addChatMessage(username, message);
 	}
+	public void addSpectator(ServerClientHandler spectator)
+	{
+		chess.addSpectator(spectator);
+	}
+	public int getPlayers()
+	{
+		return chess.getPlayers();
+	}
+
 }

@@ -34,6 +34,11 @@ public class ModelManagerClient implements ModelClient, PropertyChangeListener {
 		return client.createGameRoom(id);
 	}
 
+	@Override public boolean setSpectator()
+	{
+		return client.setSpectator();
+	}
+
 	public synchronized boolean joinGameRoom(String id) {
 
 		return client.joinGameRoom(id);

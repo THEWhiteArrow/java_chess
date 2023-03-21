@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public interface ModelClient extends utility.observer.javaobserver.UnnamedPropertyChangeSubject {
 
 	public  abstract  boolean createGameRoom(String id);
+	boolean setSpectator();
 
 	public abstract boolean joinGameRoom(String id);
 

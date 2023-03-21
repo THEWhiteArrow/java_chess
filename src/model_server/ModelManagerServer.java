@@ -20,15 +20,12 @@ public class ModelManagerServer implements ModelServer {
 //		account for the case when room of given id already exists
 		GameRoom room = new GameRoom(id);
 		room.addChessPlayer(clientHandler);
+		Logger.log("PLAYERS CREATE ROOM : " + room.getPlayers());
 		rooms.add(room);
-		Logger.log("Successfully added a new room: {id:"+id+"}" +rooms.get(0).getId());
-
-		Logger.log( getGameRoomById(room.getId()).toString() );
 		return true;
 	}
 
 	public synchronized GameRoom getGameRoomById(String id){
-		Logger.log("ROOM_ID: "+id);
 		if(id==null)return null;
 		for(GameRoom room : rooms){
 			if(id.equals(room.getId()))
@@ -42,7 +39,17 @@ public class ModelManagerServer implements ModelServer {
 		GameRoom room = getGameRoomById(id);
 		if(room==null)return false;
 
-		room.addChessPlayer(clientHandler);
+
+
+		if (room.getPlayers()<2)
+		{
+			room.addChessPlayer(clientHandler);
+			Logger.log(" PLAYERS          :" + room.getPlayers());
+		}
+		else
+			Logger.log("SPECTATOR ADDED");
+			room.addSpectator(clientHandler);
+
 
 		return true;
 	}
@@ -63,9 +70,7 @@ public class ModelManagerServer implements ModelServer {
 
 	@Override
 	public synchronized boolean updateChessGameRoom(String id, String notation) {
-		Logger.log("UPDATE ROOM ID: "+id);
 		GameRoom room = getGameRoomById(id);
-		Logger.log(room.toString());
 		if(room==null)return false;
 
 		room.getChessGame().setNotation(notation);

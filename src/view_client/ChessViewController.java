@@ -39,6 +39,7 @@ public class ChessViewController extends ViewController {
 		this.viewHandler=viewHandler;
 		this.viewModel= (ChessViewModel) viewModel;
 		this.root=root;
+		Logger.log("IS IT A SPECTATOR STILL:::" + ((ChessViewModel) viewModel).setSpectator());
 		Logger.log("Items being set");
 		listView.setItems(this.viewModel.getChatList());
 		Logger.log("Items  set");
@@ -90,7 +91,10 @@ public class ChessViewController extends ViewController {
 	public void sendNotation(String fieldName){
 		String notation = FENParser.calculateFen( piecesPane.getChildren() ) +" " +fieldName;
 		Logger.log("SENDING NOTATION: "+notation);
+		Logger.log(" IS IT A SPECTATOR?" + viewModel.setSpectator());
+		if (viewModel.setSpectator()==false)
 		viewModel.sendNotation(notation);
+		else Logger.log("SPECTATORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
 	}
 
 	public void updatePieces(String notation){
@@ -117,7 +121,10 @@ public class ChessViewController extends ViewController {
 
 			piecesPane.getChildren().add(imageView);
 
+
+			if (viewModel.setSpectator()==false)
 			new DraggableMaker().makeDraggable(imageView,piecesPane,this);
+			else Logger.log("Cant drag for sure???");
 
 		}
 	}

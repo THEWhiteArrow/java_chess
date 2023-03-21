@@ -32,6 +32,7 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 	private PrintWriter out;
 
 	private ModelClient modelClient;
+	private boolean setSpectator = false;
 
 
 	public ClientConnector(String host,int port) {
@@ -50,6 +51,7 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 			t1.setDaemon(true);
 			t1.start();
 			this.property=new PropertyChangeSupport(this);
+
 
 
 
@@ -74,18 +76,27 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 			notify();
 		}
 		else{
+
 			receivedPackage = gson.fromJson(json, GamePackage.class);
 			switch (receivedPackage.getType()){
 				case GamePackage.CREATE, GamePackage.JOIN:
 					notify();
 					break;
+				case GamePackage.ERROR:
+					if (receivedPackage.getError().equals("aaa111"))
+						setSpectator=true;
+					else setSpectator=false;
+						break;
 				default:
 					property.firePropertyChange(receivedPackage.getType(),null, receivedPackage);
-
 			}
 		}
 
-
+	}
+	@Override
+	public synchronized boolean setSpectator()
+	{
+		return setSpectator;
 	}
 
 
@@ -124,8 +135,6 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 			throw new RuntimeException(e);
 		}
 
-
-
 		Logger.log("WORKSSSSSSSSSSSSSSSSSSSSS!!...");
 		if(receivedPackage!=null && GamePackage.CREATE.equals(receivedPackage.getType()))
 			return true;
@@ -159,6 +168,7 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 
 	@Override public synchronized void sendNotation(String roomId, String notation)
 	{
+
 		Logger.log("CLIENT ROOM ID: "+roomId);
 		GamePackage gamePackage = new GamePackage(GamePackage.NOTATION, roomId,notation,null);
 		String sendNotation = gson.toJson(gamePackage);

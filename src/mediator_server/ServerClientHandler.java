@@ -1,6 +1,7 @@
 package mediator_server;
 
 import com.google.gson.Gson;
+import model_server.GameRoom;
 import model_server.ModelServer;
 import util.ChatPackage;
 import util.ChatPackageList;
@@ -66,6 +67,13 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 		out.println(sendError);
 	}
 
+	public synchronized void setSpectator()
+	{
+		Logger.log("Send setSpectator VALUE TO CLIENT");
+		GamePackage gamePackage = new GamePackage(GamePackage.ERROR,null,null,"aaa111");
+		out.println(gson.toJson(gamePackage));
+	}
+
 	public synchronized void sendNotationPackage(String notation) {
 		Logger.log("sending the notation from server to client");
 		GamePackage gamePackage = new GamePackage(GamePackage.NOTATION, null,notation,null);
@@ -118,14 +126,19 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 					{
 						case GamePackage.NOTATION:
 
-							String id =gamePackageReceived.getRoomID();
-							Logger.log("id null? : "+id);
-							String notation = gamePackageReceived.getNotation();
-							model.updateChessGameRoom(id,notation);
-							Logger.log("working notation...");
+								String id = gamePackageReceived.getRoomID();
+								Logger.log("id null? : " + id);
+								String notation = gamePackageReceived.getNotation();
+								model.updateChessGameRoom(id, notation);
+								Logger.log("working notation...");
+
 							break;
 
 						case GamePackage.ERROR:
+							if (gamePackageReceived.getError().equals("aaa111"))
+							{
+								System.out.println("ASDDASDASSADADSSADDSASAD");
+							}
 							String error = gamePackageReceived.getError();
 							out.println(error);
 							break;
