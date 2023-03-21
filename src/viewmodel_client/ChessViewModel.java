@@ -50,7 +50,7 @@ public class ChessViewModel extends ViewModel implements PropertyChangeListener 
 		Platform.runLater( () -> {
 			chatList.clear();
 			for(String chat : getChat())
-				chatList.add(0,chat);
+				chatList.add(chat);
 		});
 	}
 
