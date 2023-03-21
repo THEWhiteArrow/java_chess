@@ -13,7 +13,7 @@ public class GameRoom {
 		this.chess=new Chess();
 	}
 
-	public Chess getChessGame(){
+	public synchronized Chess getChessGame(){
 		return chess;
 	}
 

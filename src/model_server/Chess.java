@@ -23,6 +23,7 @@ public class Chess {
 
 		serverClientHandler = new ServerClientHandler[2];
 		chatLogs = new ArrayList<>();
+		chatLogs.add("SYSTEM: Welcome all players!");
 	}
 	public void setNotation(String notation) {
 		Logger.log("inside setNoation method inside chess");
@@ -61,7 +62,7 @@ public class Chess {
 	}
 
 
-	public ArrayList<String> getChatLogs(){
+	public synchronized ArrayList<String> getChatLogs(){
 		return chatLogs;
 	}
 

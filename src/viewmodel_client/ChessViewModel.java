@@ -39,7 +39,7 @@ public class ChessViewModel extends ViewModel implements PropertyChangeListener 
 		return chatList;
 	}
 
-	public void clear() {
+	public synchronized void clear() {
 
 		this.notationProperty.set(FEN);
 		loadChat();
@@ -65,6 +65,7 @@ public class ChessViewModel extends ViewModel implements PropertyChangeListener 
 
 	public void sendChatMessage(){
 		model.sendChatMessage(viewState.getRoomId(),viewState.getName(),chatProperty.get());
+		chatProperty.set("");;
 	}
 
 	public StringProperty getNotationProperty(){return notationProperty;}

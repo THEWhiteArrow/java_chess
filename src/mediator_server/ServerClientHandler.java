@@ -102,6 +102,7 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 				}
 				else if(pkg.get("type").equals("GET")){
 					ChatPackage chatPackageReceived = gson.fromJson(receive, ChatPackage.class);
+					Logger.log("CHAT ROOM ID: "+ chatPackageReceived.getRoomId());
  					sendChatListPackage( model.getAllChats(chatPackageReceived.getRoomId()) );
 				}
 				else{

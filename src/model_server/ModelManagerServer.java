@@ -27,7 +27,7 @@ public class ModelManagerServer implements ModelServer {
 		return true;
 	}
 
-	public GameRoom getGameRoomById(String id){
+	public synchronized GameRoom getGameRoomById(String id){
 		Logger.log("ROOM_ID: "+id);
 		if(id==null)return null;
 		for(GameRoom room : rooms){
@@ -57,7 +57,7 @@ public class ModelManagerServer implements ModelServer {
 	}
 
 	@Override
-	public ArrayList<String> getAllChats(String roomId) {
+	public synchronized ArrayList<String> getAllChats(String roomId) {
 		return getGameRoomById(roomId).getChessGame().getChatLogs();
 	}
 
