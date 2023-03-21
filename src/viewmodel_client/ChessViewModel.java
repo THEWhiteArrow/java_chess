@@ -58,6 +58,10 @@ public synchronized boolean setSpectator()
 				chatList.add(chat);
 		});
 	}
+	public String getRoomId()
+	{
+		return viewState.getRoomId();
+	}
 
 	public void sendNotation(String notation) {
 

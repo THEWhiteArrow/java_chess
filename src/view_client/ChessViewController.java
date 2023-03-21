@@ -43,6 +43,8 @@ public class ChessViewController extends ViewController {
 		Logger.log("Items being set");
 		listView.setItems(this.viewModel.getChatList());
 		Logger.log("Items  set");
+		if (((ChessViewModel) viewModel).setSpectator()==true)
+		mainPane.setUserData("You are spectating room : " + ((ChessViewModel) viewModel).getRoomId());
 
 		this.viewModel.getNotationProperty().addListener((obs,oldValue,newValue)->{
 			// here with event notation sth wrong
