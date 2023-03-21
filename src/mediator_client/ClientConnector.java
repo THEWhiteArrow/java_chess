@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import mediator_server.GamePackage;
 import model_client.ModelClient;
 import model_server.GameRoom;
+import util.ChatPackage;
 import util.Logger;
 
 import java.beans.PropertyChangeListener;
@@ -70,6 +71,13 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 		}
 
 
+	}
+
+	public synchronized void sendChatMessage(String id, String username, String message){
+		ChatPackage pkg = new ChatPackage(id,username,message);
+		String json = gson.toJson(pkg);
+		Logger.log("sending chat message...");
+		out.println(json);
 	}
 
 	@Override public synchronized boolean createGameRoom(String id)

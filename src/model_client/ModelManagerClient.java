@@ -48,6 +48,10 @@ public class ModelManagerClient implements ModelClient, PropertyChangeListener {
 
 	}
 
+	public synchronized void sendChatMessage(String id, String username,String message){
+		client.sendChatMessage( id, username,  message);
+	}
+
 	public synchronized String getNotation(String id) {
 		return null;
 	}

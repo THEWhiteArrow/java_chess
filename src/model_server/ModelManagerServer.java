@@ -1,5 +1,6 @@
 package model_server;
 
+import mediator_server.GamePackage;
 import mediator_server.ServerClientHandler;
 import util.Logger;
 
@@ -42,6 +43,15 @@ public class ModelManagerServer implements ModelServer {
 		if(room==null)return false;
 
 		room.addChessPlayer(clientHandler);
+
+		return true;
+	}
+
+	public synchronized  boolean addChatMessage(String id, String username, String message){
+		GameRoom room = getGameRoomById(id);
+		if(room==null)return false;
+
+		room.addChessChatMessage(username,message);
 
 		return true;
 	}
