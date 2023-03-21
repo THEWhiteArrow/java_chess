@@ -41,7 +41,7 @@ public class ModelManagerServer implements ModelServer {
 
 
 
-		if (room.getPlayers()<2)
+		if (room.getPlayers()<=2)
 		{
 			room.addChessPlayer(clientHandler);
 			Logger.log(" PLAYERS          :" + room.getPlayers());

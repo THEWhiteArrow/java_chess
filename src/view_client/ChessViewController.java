@@ -92,9 +92,9 @@ public class ChessViewController extends ViewController {
 		String notation = FENParser.calculateFen( piecesPane.getChildren() ) +" " +fieldName;
 		Logger.log("SENDING NOTATION: "+notation);
 		Logger.log(" IS IT A SPECTATOR?" + viewModel.setSpectator());
-		if (viewModel.setSpectator()==false)
+
 		viewModel.sendNotation(notation);
-		else Logger.log("SPECTATORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
+
 	}
 
 	public void updatePieces(String notation){

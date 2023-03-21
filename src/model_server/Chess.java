@@ -43,16 +43,16 @@ public class Chess {
 
 	public void addPlayer(ServerClientHandler player)
 	{
-		 if (serverClientHandler.size()<2)
+		 if (serverClientHandler.size()<=2)
 			 serverClientHandler.add(player);
 
 	}
 	public void addSpectator(ServerClientHandler spectator)
 	{
 		spectatorList.add(spectator);
-		for (int i = 0; i < spectatorList.size();i++){
+		for (int i = 1; i < spectatorList.size();i++){
 			spectatorList.get(i).setSpectator();
-			Logger.log("Spectator added to the list and setted!!!!!!");
+			Logger.log("Spectator added to the list and setted!!!!!!" + spectatorList.size());
 		}
 	}
 	public int getPlayers()
