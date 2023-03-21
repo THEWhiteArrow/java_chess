@@ -35,7 +35,7 @@ public class ChessViewModel extends ViewModel implements PropertyChangeListener 
 
 		if( isWhite ) model.sendNotation(viewState.getRoomId(), notation);
 		else {
-			StringBuilder builder = new StringBuilder(notationProperty.get().split(" ")[0]);
+			StringBuilder builder = new StringBuilder(notation.split(" ")[0]);
 			model.sendNotation(viewState.getRoomId(), String.valueOf(builder.reverse()));
 		}
 

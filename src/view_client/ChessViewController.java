@@ -71,6 +71,7 @@ public class ChessViewController extends ViewController {
 //
 //		});
 		viewModel.changeView();
+
 	}
 
 
@@ -86,7 +87,7 @@ public class ChessViewController extends ViewController {
 
 	public void sendNotation(String fieldName){
 		String notation = FENParser.calculateFen( piecesPane.getChildren() ) +" " +fieldName;
-		System.out.println(notation);
+		Logger.log("SENDING NOTATION: "+notation);
 		viewModel.sendNotation(notation);
 	}
 
