@@ -19,4 +19,5 @@ public interface ModelServer {
 
 	public abstract String getNotation(String id);
 
+    boolean addChatMessage(String roomId, String username, String message);
 }

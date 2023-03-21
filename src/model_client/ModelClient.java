@@ -16,4 +16,5 @@ public interface ModelClient extends utility.observer.javaobserver.UnnamedProper
 
 	boolean connectToServer(String host, int port);
 
+	void sendChatMessage(String roomId, String name, String s);
 }

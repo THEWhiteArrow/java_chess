@@ -2,6 +2,7 @@ package mediator_server;
 
 import com.google.gson.Gson;
 import model_server.ModelServer;
+import util.ChatPackage;
 import util.Logger;
 
 import java.beans.PropertyChangeEvent;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Map;
 
 public class ServerClientHandler implements Runnable, PropertyChangeListener
 {
@@ -23,7 +25,6 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 
 	private Gson gson;
 
-	private String roomId;
 
 	private ModelServer model;
 
@@ -70,49 +71,68 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 		out.println(sendError);
 	}
 
+	public synchronized  void sendChatPackage(String message){
+		Logger.log("prepared to send a chat message but not sending yet... " + message);
+	}
+
 	public void run() {
 		while (true)
 		{
 			try
 			{
 				String receive =in.readLine();
-				GamePackage gamePackageReceived = gson.fromJson(receive, GamePackage.class);
+				Logger.log("received: "+receive);
+				Map<String,String> pkg = gson.fromJson(receive,Map.class);
 
-				switch (gamePackageReceived.getType())
+				if(pkg.get("type").equals("CHAT")){
+					ChatPackage chatPackageReceived = gson.fromJson(receive, ChatPackage.class);
+					String roomId = chatPackageReceived.getRoomId();
+					String username = chatPackageReceived.getUsername();
+					String message = chatPackageReceived.getMessage();
 
-				{
-					case GamePackage.NOTATION:
+					model.addChatMessage(roomId,username,message);
+				}else{
 
-						String id =gamePackageReceived.getRoomID();
-						Logger.log("id null? : "+id);
-						String notation = gamePackageReceived.getNotation();
-						model.updateChessGameRoom(id,notation);
-						Logger.log("working notation...");
-						break;
+					GamePackage gamePackageReceived = gson.fromJson(receive, GamePackage.class);
 
-					case GamePackage.ERROR:
-						String error = gamePackageReceived.getError();
-						out.println(error);
-						break;
+					switch (gamePackageReceived.getType())
 
-					case GamePackage.JOIN:
-						String roomID = gamePackageReceived.getRoomID();
-						model.joinRoom(roomID,this);
-						Logger.log("JOIN WORKING");
-						out.println(gson.toJson(new GamePackage(GamePackage.JOIN,gamePackageReceived.getRoomID(),null,null)));
-						break;
-					case GamePackage.CREATE:
-						String roomId = gamePackageReceived.getRoomID();
-						Logger.log("requested a new room creation...");
-						model.createGameRoom(roomId,this);
-						out.println( gson.toJson(new GamePackage(GamePackage.CREATE,null,null,null)));
-						break;
+					{
+						case GamePackage.NOTATION:
+
+							String id =gamePackageReceived.getRoomID();
+							Logger.log("id null? : "+id);
+							String notation = gamePackageReceived.getNotation();
+							model.updateChessGameRoom(id,notation);
+							Logger.log("working notation...");
+							break;
+
+						case GamePackage.ERROR:
+							String error = gamePackageReceived.getError();
+							out.println(error);
+							break;
+
+						case GamePackage.JOIN:
+							String roomID = gamePackageReceived.getRoomID();
+							model.joinRoom(roomID,this);
+							Logger.log("JOIN WORKING");
+							out.println(gson.toJson(new GamePackage(GamePackage.JOIN,gamePackageReceived.getRoomID(),null,null)));
+							break;
+						case GamePackage.CREATE:
+							String roomId = gamePackageReceived.getRoomID();
+							Logger.log("requested a new room creation...");
+							model.createGameRoom(roomId,this);
+							out.println( gson.toJson(new GamePackage(GamePackage.CREATE,null,null,null)));
+							break;
+					}
 				}
 
 			}
 			catch (IOException e)
 			{
-				throw new RuntimeException(e);
+				System.out.println("error: "+e.getMessage());
+				break;
+//				throw new RuntimeException(e);
 			}
 		}
 

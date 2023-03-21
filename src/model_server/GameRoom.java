@@ -24,4 +24,8 @@ public class GameRoom {
 	public  void addChessPlayer(ServerClientHandler clientHandler){
 		chess.addPlayer(clientHandler);
 	}
+
+	public void addChessChatMessage(String username, String message){
+		chess.addChatMessage(username, message);
+	}
 }

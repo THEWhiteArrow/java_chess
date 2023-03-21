@@ -3,6 +3,8 @@ package view_client;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -23,6 +25,10 @@ public class ChessViewController extends ViewController {
 	@FXML private Pane piecesPane;
 	@FXML private Pane mainPane;
 	@FXML private GridPane grid;
+	@FXML private TextField chatField;
+
+	@FXML private ListView<String> listView;
+
 
 	private ChessViewModel viewModel;
 
@@ -45,6 +51,9 @@ public class ChessViewController extends ViewController {
 			});
 
 		});
+
+		this.chatField.textProperty().bindBidirectional(this.viewModel.getChatProperty());
+
 		reset();
 	}
 
@@ -62,6 +71,12 @@ public class ChessViewController extends ViewController {
 //
 //		});
 		viewModel.changeView();
+	}
+
+
+	@FXML private void enterPressed(){
+		Logger.log("pressed");
+		viewModel.sendChatMessage();
 	}
 
 

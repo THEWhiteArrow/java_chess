@@ -12,7 +12,7 @@ public class ChessViewModel extends ViewModel implements PropertyChangeListener 
 
 	private boolean isWhite = true;
 	private final String FEN="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-	private StringProperty notationProperty;
+	private StringProperty notationProperty, chatProperty;
 
 	private ViewState viewState;
 
@@ -23,6 +23,7 @@ public class ChessViewModel extends ViewModel implements PropertyChangeListener 
 		this.model=model;
 		this.viewState=viewState;
 		this.notationProperty = new SimpleStringProperty();
+		this.chatProperty = new SimpleStringProperty();
 		this.model.addListener(this);
 	}
 
@@ -40,12 +41,22 @@ public class ChessViewModel extends ViewModel implements PropertyChangeListener 
 
 	}
 
+	public void sendChatMessage(){
+		model.sendChatMessage(viewState.getRoomId(),viewState.getName(),chatProperty.get());
+	}
+
 	public StringProperty getNotationProperty(){return notationProperty;}
+	public StringProperty getChatProperty(){return chatProperty;}
 
 
 	public void changeView(){
 		isWhite = !isWhite;
-		StringBuilder builder = new StringBuilder(notationProperty.get().split(" ")[0]);
+		StringBuilder builder;
+		if(notationProperty.get().contains(" ")){
+			builder = new StringBuilder(notationProperty.get().split(" ")[0]);
+		}else{
+			builder = new StringBuilder(notationProperty.get());
+		}
 		notationProperty.set(String.valueOf(builder.reverse()));
 	}
 	/**
