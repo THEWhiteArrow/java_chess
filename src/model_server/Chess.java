@@ -17,11 +17,11 @@ public class Chess {
 	private ArrayList<String> chatLogs;
 
 
-	private ServerClientHandler[] serverClientHandler;
+	private ArrayList<ServerClientHandler> serverClientHandler;
 
 	public Chess(){
 
-		serverClientHandler = new ServerClientHandler[2];
+		serverClientHandler = new ArrayList<>();
 		chatLogs = new ArrayList<>();
 		chatLogs.add("SYSTEM: Welcome all players!");
 	}
@@ -39,11 +39,7 @@ public class Chess {
 
 	public void addPlayer(ServerClientHandler player)
 	{
-		if (serverClientHandler[0]==null)
-		{
-			serverClientHandler[0] =player;
-		}
-		else serverClientHandler[1]= player;
+		 serverClientHandler.add(player);
 	}
 
 	public void addChatMessage(String username, String message){
