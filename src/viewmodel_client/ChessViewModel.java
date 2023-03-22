@@ -74,6 +74,12 @@ public synchronized boolean setSpectator()
 	}
 
 	public void sendChatMessage(){
+		if	(setSpectator()== true)
+		{
+			model.sendChatMessage(viewState.getRoomId(),  viewState.getName() + "(Spectator) ",
+					chatProperty.get());
+			chatProperty.set("");;
+		}
 		model.sendChatMessage(viewState.getRoomId(),viewState.getName(),chatProperty.get());
 		chatProperty.set("");;
 	}
