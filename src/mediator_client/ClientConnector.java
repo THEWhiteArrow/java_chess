@@ -5,9 +5,7 @@ import com.google.gson.Gson;
 import mediator_server.GamePackage;
 import model_client.ModelClient;
 import model_server.GameRoom;
-import util.ChatPackage;
-import util.ChatPackageList;
-import util.Logger;
+import util.*;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -40,7 +38,6 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 		try
 		{
 			this.socket = new Socket(host,port);
-			out = new PrintWriter(socket.getOutputStream(),true);
 			this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			this.out = new PrintWriter(socket.getOutputStream(),true);
 			this.receivedPackage = null;
@@ -101,8 +98,10 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 
 
 	public synchronized ArrayList<String> getAllChat(String roomId){
-		out.println( gson.toJson(  new ChatPackage("GET",roomId,null,null)) );
 
+		out.println( new ChatPackageFactory().getJsonPackage("GET",null,null,roomId,null,null ));
+		Logger.log(new ChatPackageFactory().getJsonPackage("GET",null,null,roomId,null,null ));
+		Logger.log("waiting to receive chat.... : "+roomId);
 		try {
 			wait();
 		} catch (InterruptedException e) {
@@ -115,19 +114,17 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 
 
 	public synchronized void sendChatMessage(String id, String username, String message){
-		ChatPackage pkg = new ChatPackage(ChatPackage.CHAT,id,username,message);
-		String json = gson.toJson(pkg);
 		Logger.log("sending chat message...");
-		out.println(json);
+		out.println( new ChatPackageFactory().getJsonPackage(ChatPackage.CHAT,null,message,id,username,null));
 	}
 
 	@Override public synchronized boolean createGameRoom(String id)
 	{
-		GamePackage pkg = new GamePackage(GamePackage.CREATE,id,null,null);
-		Logger.log("sending create request...");
-		out.println( gson.toJson(pkg) );
 
-		Logger.log("sent...");
+		Logger.log("sending create request...: "+id);
+		out.println( new GamePackageFactory().getJsonPackage(GamePackage.CREATE,null,null,id,null,null));
+
+		Logger.log("sent...: " + new GamePackageFactory().getJsonPackage(GamePackage.CREATE,null,null,id,null,null));
 		try {
 			Logger.log("starting to wait...");
 			wait();
@@ -147,8 +144,7 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 	@Override public synchronized boolean joinGameRoom(String id)
 	{
 		Logger.log("joining the room...");
-		GamePackage gamePackage = new GamePackage(GamePackage.JOIN,id,null,null);
-		out.println(gson.toJson(gamePackage));
+		out.println( new GamePackageFactory().getJsonPackage(GamePackage.JOIN,null,null,id,null,null));
 		Logger.log("send join room request...");
 		try {
 			Logger.log("starting to wait...");
@@ -170,9 +166,7 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 	{
 
 		Logger.log("CLIENT ROOM ID: "+roomId);
-		GamePackage gamePackage = new GamePackage(GamePackage.NOTATION, roomId,notation,null);
-		String sendNotation = gson.toJson(gamePackage);
-		out.println(sendNotation);
+		out.println( new GamePackageFactory().getJsonPackage(GamePackage.NOTATION,notation,null,roomId,null,null));
 	}
 
 	@Override public String getNotation(String id)
@@ -185,9 +179,7 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 
 	@Override public void displayMessage(String msg)
 	{
-		GamePackage gamePackage = new GamePackage(null,null,null,msg);
-		String displayMessage = gson.toJson(gamePackage);
-		out.println(displayMessage);
+		out.println( new GamePackageFactory().getJsonPackage(GamePackage.ERROR,null,null,null,null,msg));
 	}
 
 	@Override
