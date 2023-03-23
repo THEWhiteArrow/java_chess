@@ -11,6 +11,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 
 public class ModelManagerClient implements ModelClient, PropertyChangeListener {
 
@@ -55,6 +56,11 @@ public class ModelManagerClient implements ModelClient, PropertyChangeListener {
 	}
 
 	public synchronized void sendChatMessage(String id, String username,String message){
+		if (setSpectator() == true)
+		{
+			client.sendChatMessage( id, "(Spectator) " + username,  message);
+		}
+		else
 		client.sendChatMessage( id, username,  message);
 	}
 
