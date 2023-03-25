@@ -12,7 +12,8 @@ public class GamePackage extends NetworkPackage implements Serializable
 	public static final String NOTATION = "NOTATION";
 
 	public static final String JOIN = "JOIN";
-    public static final String CREATE = "CREATE";
+	public static final String CREATE = "CREATE";
+	public static final String SPECTATE = "SPECTATE";
 
 
 

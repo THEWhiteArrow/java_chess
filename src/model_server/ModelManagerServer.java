@@ -38,12 +38,12 @@ public class ModelManagerServer implements ModelServer {
 		GameRoom room = getGameRoomById(id);
 		if(room==null)return false;
 
-		if (room.getPlayers()<=1)
+		if (room.getPlayers()>=2)
 		{
-			room.addChessPlayer(clientHandler);
+			room.addSpectator(clientHandler);
 		}
 		else
-			room.addSpectator(clientHandler);
+		room.addChessPlayer(clientHandler);
 
 
 

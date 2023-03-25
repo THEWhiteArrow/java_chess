@@ -41,15 +41,12 @@ public class Chess {
 
 	public void addPlayer(ServerClientHandler player)
 	{
-		 if (serverClientHandler.size()<=1)
-			 serverClientHandler.add(player);
-		 else addSpectator(player);
-
+		serverClientHandler.add(player);
 	}
 	public void addSpectator(ServerClientHandler spectator)
 	{
 		spectatorList.add(spectator);
-		for (int i = 1; i < spectatorList.size();i++){
+		for (int i = 0; i < spectatorList.size();i++){
 			spectatorList.get(i).setSpectator();
 		}
 	}
