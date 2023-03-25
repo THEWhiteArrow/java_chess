@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 public class Chess {
 
-	private boolean[] isWhite;
-
 	private String notation;
 
 	private ArrayList<String> chatLogs;
@@ -43,8 +41,9 @@ public class Chess {
 
 	public void addPlayer(ServerClientHandler player)
 	{
-		 if (serverClientHandler.size()<=2)
+		 if (serverClientHandler.size()<=1)
 			 serverClientHandler.add(player);
+		 else addSpectator(player);
 
 	}
 	public void addSpectator(ServerClientHandler spectator)
@@ -52,13 +51,11 @@ public class Chess {
 		spectatorList.add(spectator);
 		for (int i = 1; i < spectatorList.size();i++){
 			spectatorList.get(i).setSpectator();
-			Logger.log("Spectator added to the list and setted!!!!!!" + spectatorList.size());
 		}
 	}
 	public int getPlayers()
 	{
 		return serverClientHandler.size();
-
 	}
 
 	public void addChatMessage(String username, String message){

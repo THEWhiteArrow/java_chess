@@ -22,13 +22,11 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 
 	private GamePackage receivedPackage;
 	private ChatPackageList chatPackageList;
-	private Gson gson;  // ADd to class diagram
+	private Gson gson;
 	private Socket socket;
 	private PropertyChangeSupport property;
 	private BufferedReader in;
-
 	private PrintWriter out;
-
 	private ModelClient modelClient;
 	private boolean setSpectator = false;
 
@@ -62,7 +60,6 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 
 	public synchronized void  receivedPackage(String json) { //This function might be private and without any arguments passed
 		// then we should check for a package being received by the inputStream (in.readline) and then check the type of this package.
-		Logger.log("received package");
 		Map<String,String> pkgMap = gson.fromJson(json, Map.class);
 		if(pkgMap.get("type").equals("CHAT")){
 			ChatPackage chatPkg = gson.fromJson(json,ChatPackage.class);
@@ -100,8 +97,6 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 	public synchronized ArrayList<String> getAllChat(String roomId){
 
 		out.println( new ChatPackageFactory().getJsonPackage("GET",null,null,roomId,null,null ));
-		Logger.log(new ChatPackageFactory().getJsonPackage("GET",null,null,roomId,null,null ));
-		Logger.log("waiting to receive chat.... : "+roomId);
 		try {
 			wait();
 		} catch (InterruptedException e) {
@@ -114,40 +109,25 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 
 
 	public synchronized void sendChatMessage(String id, String username, String message){
-		Logger.log("sending chat message...");
 		out.println( new ChatPackageFactory().getJsonPackage(ChatPackage.CHAT,null,message,id,username,null));
 	}
 
 	@Override public synchronized boolean createGameRoom(String id)
 	{
-
-		Logger.log("sending create request...: "+id);
-		out.println( new GamePackageFactory().getJsonPackage(GamePackage.CREATE,null,null,id,null,null));
-
-		Logger.log("sent...: " + new GamePackageFactory().getJsonPackage(GamePackage.CREATE,null,null,id,null,null));
-		try {
-			Logger.log("starting to wait...");
+		out.println( new GamePackageFactory().getJsonPackage(GamePackage.CREATE,null,null,id,null,null));		try {
 			wait();
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		}
-
-		Logger.log("WORKSSSSSSSSSSSSSSSSSSSSS!!...");
 		if(receivedPackage!=null && GamePackage.CREATE.equals(receivedPackage.getType()))
 			return true;
-
-//		fire error property event?
-
 		return false;
 	}
 
 	@Override public synchronized boolean joinGameRoom(String id)
 	{
-		Logger.log("joining the room...");
 		out.println( new GamePackageFactory().getJsonPackage(GamePackage.JOIN,null,null,id,null,null));
-		Logger.log("send join room request...");
 		try {
-			Logger.log("starting to wait...");
 			wait();
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
@@ -164,8 +144,6 @@ public class ClientConnector  implements ModelClient, utility.observer.javaobser
 
 	@Override public synchronized void sendNotation(String roomId, String notation)
 	{
-
-		Logger.log("CLIENT ROOM ID: "+roomId);
 		out.println( new GamePackageFactory().getJsonPackage(GamePackage.NOTATION,notation,null,roomId,null,null));
 	}
 

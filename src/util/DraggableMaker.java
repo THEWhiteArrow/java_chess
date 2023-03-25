@@ -29,7 +29,6 @@ public class DraggableMaker {
 
         node.setOnMouseReleased(evt->{
 
-//            System.out.println("RELEASED"+" | "+ evt.getX()+":"+evt.getY());
 
 
 

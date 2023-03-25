@@ -93,7 +93,6 @@ public class ModelManagerClient implements ModelClient, PropertyChangeListener {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		Logger.log("CLIENT MANAGER RECEIVED A PROPERTY CHANGE");
 		property.firePropertyChange(evt);
 	}
 }

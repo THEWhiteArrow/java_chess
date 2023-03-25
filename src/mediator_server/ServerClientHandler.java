@@ -65,24 +65,18 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 
 	public synchronized void setSpectator()
 	{
-		Logger.log("Send setSpectator VALUE TO CLIENT");
 		out.println( new GamePackageFactory().getJsonPackage(GamePackage.ERROR,null,null,null,null,"aaa111"));
 	}
 
 	public synchronized void sendNotationPackage(String notation) {
-		Logger.log("sending the notation from server to client");
-
 		out.println( new GamePackageFactory().getJsonPackage(GamePackage.NOTATION,notation,null,null,null,null));
 	}
 
 	public synchronized  void sendChatPackage(String message){
-		Logger.log("prepared to send a chat message but not sending yet... " + message);
-
 		out.println( new ChatPackageFactory().getJsonPackage(ChatPackage.CHAT,null,message,null,null,null));
 	}
 
 	public synchronized  void sendChatListPackage(ArrayList<String> chats){
-		Logger.log("sending chat list");
 		ChatPackageList chatPackageList = new ChatPackageList(chats);
 //		doesnt make a sence to implement factory for this since this one is completely different from others
 		out.println( gson.toJson(chatPackageList) );
@@ -94,7 +88,6 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 			try
 			{
 				String receive =in.readLine();
-				Logger.log("received: "+receive);
 				Map<String,String> pkg = gson.fromJson(receive,Map.class);
 
 				if(pkg.get("type").equals("CHAT")){
@@ -107,7 +100,6 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 				}
 				else if(pkg.get("type").equals("GET")){
 					ChatPackage chatPackageReceived = gson.fromJson(receive, ChatPackage.class);
-					Logger.log("CHAT ROOM ID: "+ chatPackageReceived.getRoomId());
  					sendChatListPackage( model.getAllChats(chatPackageReceived.getRoomId()) );
 				}
 				else{
@@ -120,17 +112,15 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 						case GamePackage.NOTATION:
 
 								String id = gamePackageReceived.getRoomID();
-								Logger.log("id null? : " + id);
 								String notation = gamePackageReceived.getNotation();
 								model.updateChessGameRoom(id, notation);
-								Logger.log("working notation...");
 
 							break;
 
 						case GamePackage.ERROR:
 							if (gamePackageReceived.getError().equals("aaa111"))
 							{
-								System.out.println("ASDDASDASSADADSSADDSASAD");
+
 							}
 							String error = gamePackageReceived.getError();
 
@@ -140,13 +130,10 @@ public class ServerClientHandler implements Runnable, PropertyChangeListener
 						case GamePackage.JOIN:
 							String roomID = gamePackageReceived.getRoomID();
 							model.joinRoom(roomID,this);
-							Logger.log("JOIN WORKING");
-
 							out.println( new GamePackageFactory().getJsonPackage(GamePackage.JOIN,null,null,roomID,null,null));
 							break;
 						case GamePackage.CREATE:
 							String roomId = gamePackageReceived.getRoomID();
-							Logger.log("requested a new room creation... : " + roomId);
 							model.createGameRoom(roomId,this);
 							out.println( new GamePackageFactory().getJsonPackage(GamePackage.CREATE,null,null,null,null,null));
 							break;

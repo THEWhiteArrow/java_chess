@@ -39,17 +39,13 @@ public class ChessViewController extends ViewController {
 		this.viewHandler=viewHandler;
 		this.viewModel= (ChessViewModel) viewModel;
 		this.root=root;
-		Logger.log("IS IT A SPECTATOR STILL:::" + ((ChessViewModel) viewModel).setSpectator());
-		Logger.log("Items being set");
 		listView.setItems(this.viewModel.getChatList());
-		Logger.log("Items  set");
 		if (((ChessViewModel) viewModel).setSpectator()==true)
 		mainPane.setUserData("You are spectating room : " + ((ChessViewModel) viewModel).getRoomId());
 
 		this.viewModel.getNotationProperty().addListener((obs,oldValue,newValue)->{
 			// here with event notation sth wrong
 			String notation = (String)newValue;
-			Logger.log(notation);
 
 			Platform.runLater(()->{
 				updatePieces(notation);
@@ -81,7 +77,6 @@ public class ChessViewController extends ViewController {
 
 
 	@FXML private void enterPressed(){
-		Logger.log("pressed");
 		viewModel.sendChatMessage();
 	}
 
@@ -92,20 +87,11 @@ public class ChessViewController extends ViewController {
 
 	public void sendNotation(String fieldName){
 		String notation = FENParser.calculateFen( piecesPane.getChildren() ) +" " +fieldName;
-		Logger.log("SENDING NOTATION: "+notation);
-		Logger.log(" IS IT A SPECTATOR?" + viewModel.setSpectator());
-
 		viewModel.sendNotation(notation);
-
 	}
 
 	public void updatePieces(String notation){
-		System.out.println("UPDATING PIECES...........");
-
 		piecesPane.getChildren().remove(0,piecesPane.getChildren().size());
-
-
-
 
 		ArrayList<Piece> pieces = FENParser.createPieces(notation);
 		for(Piece p : pieces){
@@ -126,7 +112,7 @@ public class ChessViewController extends ViewController {
 
 			if (viewModel.setSpectator()==false)
 			new DraggableMaker().makeDraggable(imageView,piecesPane,this);
-			else Logger.log("Cant drag for sure???");
+
 
 		}
 	}

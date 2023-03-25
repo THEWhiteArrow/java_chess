@@ -27,7 +27,6 @@ public class ClientReceiver implements Runnable {
 		while(true){
 			try {
 				String receive = in.readLine();
-				Logger.log("received sth...");
 				 client.receivedPackage(receive);
 			} catch (IOException e) {
 				throw new RuntimeException(e);

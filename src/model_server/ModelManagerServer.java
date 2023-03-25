@@ -20,7 +20,6 @@ public class ModelManagerServer implements ModelServer {
 //		account for the case when room of given id already exists
 		GameRoom room = new GameRoom(id);
 		room.addChessPlayer(clientHandler);
-		Logger.log("PLAYERS CREATE ROOM : " + room.getPlayers());
 		rooms.add(room);
 		return true;
 	}
@@ -39,16 +38,13 @@ public class ModelManagerServer implements ModelServer {
 		GameRoom room = getGameRoomById(id);
 		if(room==null)return false;
 
-
-
-		if (room.getPlayers()<=2)
+		if (room.getPlayers()<=1)
 		{
 			room.addChessPlayer(clientHandler);
-			Logger.log(" PLAYERS          :" + room.getPlayers());
 		}
 		else
-			Logger.log("SPECTATOR ADDED");
 			room.addSpectator(clientHandler);
+
 
 
 		return true;
